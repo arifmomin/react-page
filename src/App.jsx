@@ -1,11 +1,15 @@
-import MainPage from "./assets/Component/MainPage/MainPage"
+import React from "react";
+import MainPage from "./assets/Component/MainPage/MainPage";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function App() {
+const App = () => {
   return (
-    <div>
-      <MainPage/>
-    </div>
-  )
-}
+    <>
+      <MainPage />
+      <ToastContainer />
+    </>
+  );
+};
 
-export default App
+export default App;
