@@ -28,10 +28,10 @@ const Errortoast = (message = "something is success", position = "top-center", d
         });
 }
 
-const Infotoast = (message = "something is success", position = "top-center", delay = 5000)=>{
+const Infotoast = (message = "something is success", position = "top-center", delay = 3000)=>{
     toast.success(message, {
         position: position,
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,

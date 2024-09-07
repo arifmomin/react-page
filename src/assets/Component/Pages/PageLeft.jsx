@@ -12,9 +12,12 @@ import {
   Infotoast,
 } from "../../../../Utils/tostify/tostify";
 import { RotatingLines } from "react-loader-spinner";
+import { getDatabase, push, ref, set } from "firebase/database";
+import moment from "moment";
 
 function PageLeft() {
   const auth = getAuth();
+  const db = getDatabase();
   const [Eye, setEye] = useState(false);
   const [email, setEmail] = useState("");
   const [fullName, setfullName] = useState("");
@@ -49,16 +52,23 @@ function PageLeft() {
         }).then(()=>{
           updateProfile(auth.currentUser,{
             displayName:fullName
-          }).then(()=>{
+          })
+        }).then(()=>{
             sendEmailVerification(auth.currentUser).then(()=>{
-              Infotoast(
-                `${auth.currentUser.displayName} please check your mail`              
-              )
+              Infotoast(`${auth.currentUser.displayName} please check your mail`)
               
-            })
+            });
+          }).then(()=>{
+            const UserRef = ref (db, "users/");
+            set (push (UserRef) , {
+              userUid : auth.currentUser.uid,
+              userEmail : auth.currentUser.email,
+              userName : fullName,
+              CreatedAtt : moment().format(" MM, DD, YYYY, h:mm:ss a"),
+            });
           })
           
-        })
+        
         .catch((err) => {
           Errortoast(`${err.code}`, "top-right", 7000);
           
