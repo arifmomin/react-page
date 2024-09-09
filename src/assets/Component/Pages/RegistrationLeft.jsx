@@ -15,7 +15,7 @@ import { RotatingLines } from "react-loader-spinner";
 import { getDatabase, push, ref, set } from "firebase/database";
 import moment from "moment";
 
-function PageLeft() {
+function RegistrationLeft() {
   const auth = getAuth();
   const db = getDatabase();
   const [Eye, setEye] = useState(false);
@@ -207,4 +207,4 @@ function PageLeft() {
   );
 }
 
-export default PageLeft;
+export default RegistrationLeft;
