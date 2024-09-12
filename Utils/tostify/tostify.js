@@ -14,8 +14,8 @@ const successtoast = (message = "something is success", position = "top-right", 
         });
 }
 
-const Errortoast = (message = "something is success", position = "top-center", delay = 3000)=>{
-    toast.error('This Email is allready use', {
+const Errortoast = (message = "This Email is allready use", position = "top-center", delay = 3000)=>{
+    toast.error(message, {
         position: position,
         autoClose: 5000,
         hideProgressBar: false,

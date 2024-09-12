@@ -22,9 +22,11 @@ const router = createBrowserRouter (createRoutesFromElements(
 
 const App = () => {
   return (
-    <RouterProvider  router ={router}>
-      <ToastContainer />
-    </RouterProvider >
+<>
+<RouterProvider  router ={router}>
+
+      </RouterProvider >
+      <ToastContainer /></>
   );
 };
 

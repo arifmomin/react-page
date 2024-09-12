@@ -14,6 +14,7 @@ import {
 import { RotatingLines } from "react-loader-spinner";
 import { getDatabase, push, ref, set } from "firebase/database";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 function RegistrationLeft() {
   const auth = getAuth();
@@ -64,6 +65,7 @@ function RegistrationLeft() {
               userUid : auth.currentUser.uid,
               userEmail : auth.currentUser.email,
               userName : fullName,
+              UserPhotoUrl: "",
               CreatedAtt : moment().format(" MM, DD, YYYY, h:mm:ss a"),
             });
           })
@@ -196,7 +198,7 @@ function RegistrationLeft() {
                   className="text-[#EA6C00] font-bold hover:text-commonColor transition-all ease-linear duration-300"
                   href="#"
                 >
-                  Sign In
+                  <Link to={"/Login"}>Sign In</Link>
                 </a>
               </span>
             </h3>
