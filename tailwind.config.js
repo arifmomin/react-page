@@ -1,3 +1,5 @@
+import Search from './src/assets/Component/HomePage/HomeRightComponent/Search/Search';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -8,9 +10,8 @@ export default {
     extend: {
       fontFamily: {
         Nunito: ["Nunito", "sans-serif"],
-      },
-      fontFamily:{
         openSans:["Open Sans", "sans-serif"],
+        Poppins: ["Poppins", "sans-serif"],
       },
       colors: {
         commonColor: "#11175D",
@@ -18,8 +19,9 @@ export default {
       },
       dropShadow: {
         custom: '-2px 0px 4px rgba(0, 0, 0, 0.25)',
+        SearchShadow: '0px 4px 3px rgba(0, 0, 0, 0.25)',
       },
     },
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar'),],
 }
