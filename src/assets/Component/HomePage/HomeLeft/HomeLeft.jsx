@@ -42,7 +42,6 @@ const HomeLeft = () => {
 <UploadButton uploader={uploader}
                 options={options}
                 onComplete={(files)=>
-                  
                   update (ref(db, "users/" + user.userKey), {
                     UserPhotoUrl : (files[0].fileUrl)
                   })
@@ -56,26 +55,26 @@ const HomeLeft = () => {
 </picture>
 
 </div>
-    <h1 className='text-xl text-center font-openSans font-semibold text-white'>{user? user.userName : "Name Missing"}</h1>
+    <h1 className='text-xl text-center font-openSans font-semibold text-white'>{user && user.userName ? user.userName : "Name Missing"}</h1>
   </div>
   <div className='w-full'>
     <ul className='flex flex-col items-center'>
-      <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] ${location.pathname === "/" && " text-commonBackground bg-white  pl-[52px] pr-[73px] flex justify-center items-center rounded-l-2xl mr-[-25px] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
+      <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] w-full flex justify-center items-center z-50 ${location.pathname === "/" && " text-commonBackground before:absolute before:top-0 before:right-0 before:bg-white before:w-[90%] before:h-full before:rounded-l-2xl before:z-[-999] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
         <Link to={"/"}>
         <SlHome/>
         </Link>
       </li>
-      <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] ${location.pathname === "/Chat" && " text-commonBackground bg-white  pl-[52px] pr-[73px] flex justify-center items-center rounded-l-2xl mr-[-25px] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
+      <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] w-full flex justify-center items-center z-50 ${location.pathname === "/Chat" && " text-commonBackground before:absolute before:top-0 before:right-0 before:bg-white before:w-[90%] before:h-full before:rounded-l-2xl before:z-[-999] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
         <Link to={"/Chat"}>
         <AiFillMessage/>
         </Link>
       </li>
-      <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] ${location.pathname === "/Notification" && " text-commonBackground bg-white  pl-[52px] pr-[73px] flex justify-center items-center rounded-l-2xl mr-[-25px] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
+      <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] w-full flex justify-center items-center z-50 ${location.pathname === "/Notification" && " text-commonBackground before:absolute before:top-0 before:right-0 before:bg-white before:w-[90%] before:h-full before:rounded-l-2xl before:z-[-999] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
         <Link to={"/Notification"}>
         <IoMdNotificationsOutline/>
         </Link>
       </li>
-      <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] ${location.pathname === "/Setting" && " text-commonBackground bg-white  pl-[52px] pr-[73px] flex justify-center items-center rounded-l-2xl mr-[-25px] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
+      <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] w-full flex justify-center items-center z-50 ${location.pathname === "/Setting" && " text-commonBackground before:absolute before:top-0 before:right-0 before:bg-white before:w-[90%] before:h-full before:rounded-l-2xl before:z-[-999] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
       <Link to={"/Setting"}>
       <IoSettingsOutline/>
         </Link>
