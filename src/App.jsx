@@ -14,7 +14,7 @@ import RootLayout from "./assets/RootLayout/RootLayout";
 const router = createBrowserRouter (createRoutesFromElements(
   <Route>
     <Route path="/" element = {<RootLayout/>}>
-    <Route path="/Home" element = {<Home/>}></Route>
+    <Route index element = {<Home/>}></Route>
     <Route path="/Chat" element = {"this is chat page"}></Route>
     <Route path="/Notification" element = {"this is Notification page"}></Route>
     <Route path="/Setting" element = {"this is setting page"}></Route>

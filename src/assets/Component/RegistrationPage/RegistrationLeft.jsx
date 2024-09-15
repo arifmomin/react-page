@@ -67,13 +67,10 @@ function RegistrationLeft() {
               userName : fullName,
               UserPhotoUrl: "",
               CreatedAtt : moment().format(" MM, DD, YYYY, h:mm:ss a"),
-            });
-          })
-          
-        
-        .catch((err) => {
+            })
+          }).catch((err) => {
           Errortoast(`${err.code}`, "top-right", 7000);
-          
+
         }).finally(()=>{
           setloading(false);
           setEmail("");

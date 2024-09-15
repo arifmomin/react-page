@@ -7,10 +7,11 @@ import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvide
 import { Errortoast, successtoast } from '../../../../Utils/tostify/tostify';
 import moment from "moment";
 import { getDatabase, push, ref, set } from "firebase/database";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const LoginLeft = () => {
     const auth = getAuth();
     const db = getDatabase();
+    const Navigate = useNavigate();
     const [Eye, setEye] = useState(false);
     const [loading, setloading] = useState(false);
     const [loginInput, setloginInput] = useState ({
@@ -46,6 +47,7 @@ const LoginLeft = () => {
             signInWithEmailAndPassword(auth, email, password)
             .then(() => {
              successtoast ("Log in Successfull");
+             Navigate("/");
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -59,9 +61,7 @@ const LoginLeft = () => {
                 setloginError({ emailError:"", passwordError:""});
             })
         };
-        }
-   
-
+        };
     const handleEye = () => {
         setEye(!Eye);
       };
@@ -75,7 +75,6 @@ const LoginLeft = () => {
             return user
         }).then((user)=>{
             const {photoUrl, displayName, email, localId} = user.reloadUserInfo;
-            console.log(photoUrl, displayName, email, localId);
             const UserRef = ref (db, "users/");
             set (push (UserRef) , {
               userUid : localId,
@@ -83,13 +82,15 @@ const LoginLeft = () => {
               userName : displayName,
               UserPhotoUrl : photoUrl ?  photoUrl : "",
               CreatedAtt : moment().format(" MM, DD, YYYY, h:mm:ss a"),
-            })
+            }).then(()=>{
+                Navigate("/");
+            });
         })
           .catch((error) => {
             const errorCode = error.code;
             Errortoast (errorCode)
           });
-    }
+    };
   return (
     <div className='h-screen w-[55%] flex justify-center items-center'>
             <form action="#" method='post' className='w-full max-w-[480px]' onSubmit={(e)=>e.preventDefault()}>
