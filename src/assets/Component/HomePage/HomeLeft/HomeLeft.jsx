@@ -6,9 +6,9 @@ import { SlHome } from 'react-icons/sl'
 import { AiFillMessage } from 'react-icons/ai'
 import { IoMdNotificationsOutline } from 'react-icons/io'
 import { Link, useLocation,} from 'react-router-dom'
-import { getAuth } from 'firebase/auth'
 import { Uploader } from "uploader";
 import { UploadButton } from "react-uploader";
+import { getAuth, updateProfile  } from 'firebase/auth'
 import { getDatabase, ref, onValue, update } from "firebase/database";
 
 const uploader = Uploader({
@@ -20,6 +20,8 @@ const HomeLeft = () => {
   const db = getDatabase();
   const [user, setuser] = useState ({});
   const location = useLocation ();
+
+  
   useEffect (()=>{
     const getUserData = ()=>{
       const starCountRef = ref(db, 'users/');
@@ -42,13 +44,20 @@ const HomeLeft = () => {
 <UploadButton uploader={uploader}
                 options={options}
                 onComplete={(files)=>
+                  
                   update (ref(db, "users/" + user.userKey), {
                     UserPhotoUrl : (files[0].fileUrl)
+                  }).then(()=>{
+                    updateProfile  (auth.currentUser, {
+                      photoURL: files[0].fileUrl
+                       
+                    })
+                    console.log(PhotoUrl);
                   })
                 }>
     {({onClick}) =>
       <button onClick={onClick}>
-        <span className='absolute top-[35%] left-[33%] text-[36px] text-white opacity-0 transition-opacity duration-200 ease-linear group-hover:opacity-100'><TbCloudUpload/></span>
+        <span className='absolute top-[26%] left-[33%] text-[36px] text-white opacity-0 transition-opacity duration-200 ease-linear group-hover:opacity-100'><TbCloudUpload/></span>
       </button>
     }
   </UploadButton>
@@ -60,22 +69,22 @@ const HomeLeft = () => {
   <div className='w-full'>
     <ul className='flex flex-col items-center'>
       <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] w-full flex justify-center items-center z-50 ${location.pathname === "/" && " text-commonBackground before:absolute before:top-0 before:right-0 before:bg-white before:w-[90%] before:h-full before:rounded-l-2xl before:z-[-999] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
-        <Link to={"/"}>
+        <Link className='w-full h-full flex justify-center items-center' to={"/"}>
         <SlHome/>
         </Link>
       </li>
       <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] w-full flex justify-center items-center z-50 ${location.pathname === "/Chat" && " text-commonBackground before:absolute before:top-0 before:right-0 before:bg-white before:w-[90%] before:h-full before:rounded-l-2xl before:z-[-999] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
-        <Link to={"/Chat"}>
+        <Link className='w-full h-full flex justify-center items-center' to={"/Chat"}>
         <AiFillMessage/>
         </Link>
       </li>
       <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] w-full flex justify-center items-center z-50 ${location.pathname === "/Notification" && " text-commonBackground before:absolute before:top-0 before:right-0 before:bg-white before:w-[90%] before:h-full before:rounded-l-2xl before:z-[-999] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
-        <Link to={"/Notification"}>
+        <Link className='w-full h-full flex justify-center items-center' to={"/Notification"}>
         <IoMdNotificationsOutline/>
         </Link>
       </li>
       <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] w-full flex justify-center items-center z-50 ${location.pathname === "/Setting" && " text-commonBackground before:absolute before:top-0 before:right-0 before:bg-white before:w-[90%] before:h-full before:rounded-l-2xl before:z-[-999] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
-      <Link to={"/Setting"}>
+      <Link className='w-full h-full flex justify-center items-center' to={"/Setting"}>
       <IoSettingsOutline/>
         </Link>
         </li>

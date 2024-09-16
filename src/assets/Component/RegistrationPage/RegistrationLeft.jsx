@@ -14,10 +14,11 @@ import {
 import { RotatingLines } from "react-loader-spinner";
 import { getDatabase, push, ref, set } from "firebase/database";
 import moment from "moment";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function RegistrationLeft() {
   const auth = getAuth();
+  const Navigate = useNavigate();
   const db = getDatabase();
   const [Eye, setEye] = useState(false);
   const [email, setEmail] = useState("");
@@ -53,11 +54,12 @@ function RegistrationLeft() {
         }).then(()=>{
           updateProfile(auth.currentUser,{
             displayName:fullName
+            
           })
         }).then(()=>{
             sendEmailVerification(auth.currentUser).then(()=>{
               Infotoast(`${auth.currentUser.displayName} please check your mail`)
-              
+              Navigate ("/Login");
             });
           }).then(()=>{
             const UserRef = ref (db, "users/");
