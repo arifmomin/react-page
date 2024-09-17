@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import user from "./FriendRequiestImage/user.png"
-import { getDatabase, ref, onValue, set, push } from "firebase/database";
+import { getDatabase, ref, onValue, set, push, remove } from "firebase/database";
 import { getAuth } from 'firebase/auth';
 import moment from "moment";
 const FriendRequiest = () => {
@@ -24,12 +24,33 @@ useEffect (()=>{
     
     setFriendRequestList(FriendRequestArr);
 });
-
-}, []);
-
 console.log(FriendRequestList);
 
-  return (
+}, []);
+/**
+ * todo : handleAcceptFndReq button implement
+ * @param {(item)}
+ */
+const handleAcceptFndReq = ((item)=>{
+    set(push (ref(db, "Friends/")),{
+        ...item,
+        CreatedAt: moment().format("MM, DD, YYYY, h:mm:ss a"),
+        FriendRequestKey : null,
+    }).then(()=>{
+        const FriendReqRef = (ref(db, "FriendRequest/" + item.FriendRequestKey))
+        remove(FriendReqRef);
+    });
+});
+
+/**
+ * todo : HandleRejectFndReq button implement
+ * @param {(item)}
+ */
+const HandleRejectFndReq = (item)=>{
+    const removeFndReq = (ref(db, "FriendRequest/" + item.FriendRequestKey))
+    remove(removeFndReq);
+};
+return (
     <div className='w-[32.5%] h-[43vh] bg-white rounded-[20px] drop-shadow-SearchShadow px-5 py-3 flex flex-col gap-y-[10px]'>
     <div className='flex justify-between items-center'>
   <div className='relative'>
@@ -56,8 +77,8 @@ console.log(FriendRequestList);
                                 <p className='GroupListSumHeading'>{item.sendFriendRequestUserEmail}</p>
                             </div>
                             <div className='flex justify-center items-center gap-x-1'>
-                                <button className='GroupListButton w-[60px] text-[14px]'>Confirm</button>
-                                <button className='GroupListButton w-[60px] text-[14px] bg-gray-500'>Delete</button>
+                                <button className='GroupListButton w-[60px] text-[14px]' onClick={(()=> handleAcceptFndReq (item))}>Confirm</button>
+                                <button className='GroupListButton w-[60px] text-[14px] bg-gray-500' onClick={()=> HandleRejectFndReq (item)}>Delete</button>
                             </div>
                         </div>
                     </div>

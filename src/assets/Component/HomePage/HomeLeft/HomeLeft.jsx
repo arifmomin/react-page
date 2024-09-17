@@ -49,8 +49,7 @@ const HomeLeft = () => {
                     UserPhotoUrl : (files[0].fileUrl)
                   }).then(()=>{
                     updateProfile  (auth.currentUser, {
-                      photoURL: files[0].fileUrl
-                       
+                      photoURL: files[0].fileUrl,
                     })
                     console.log(PhotoUrl);
                   })
