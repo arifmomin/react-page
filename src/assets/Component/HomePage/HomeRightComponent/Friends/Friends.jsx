@@ -34,7 +34,7 @@ const handleBlocked =(item = {})=>{
     set(push(BlockedUserref), item);
     const removeFriend = ref(db, "Friends/" + item.friendkey)
     remove (removeFriend);
-}
+};
 
   return (
         <div className='h-[50vh] w-[32.5%] bg-white rounded-[20px] drop-shadow-SearchShadow px-5 py-3 flex flex-col gap-y-[10px]'>

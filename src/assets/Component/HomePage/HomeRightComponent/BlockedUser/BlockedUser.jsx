@@ -20,10 +20,16 @@ useEffect(()=>{
         })
         setBlockList (BlocklistArr);
     });
-    console.log(BlockList);
 }, [])
 
-
+/**
+ * todo : UnblockUser function implement
+ */
+const UnblockUser =(item = {})=>{
+    
+    console.log(item);
+    
+};
 
 
   return (
@@ -53,7 +59,7 @@ useEffect(()=>{
                               <p className='GroupListSumHeading text-[12px]'>{moment(item.CreatedAt).toNow()}</p>
                           </div>
                           <div>
-                              <button className='GroupListButton text-base w-[94px]'>Unblock</button>
+                              <button className='GroupListButton text-base w-[94px]' onClick={(() => { UnblockUser (item)})}>Unblock</button>
                           </div>
                       </div>
                   </div>
