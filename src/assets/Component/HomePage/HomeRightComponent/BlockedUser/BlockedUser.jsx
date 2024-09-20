@@ -11,12 +11,12 @@ const BlockedUser = () => {
     const [BlockList, setBlockList] = useState ([]);
 
 useEffect(()=>{
-    const starCountRef = ref(db, 'BlockedUser/');
+    const starCountRef = ref(db, 'BlockedUser/'); 
     onValue(starCountRef, (snapshot) => {
         const BlocklistArr = [];
         snapshot.forEach((item) =>{
             if(auth.currentUser.uid === item.val().ReceivedFriendRequestuid)
-                BlocklistArr.push({...item.val(),})  
+                BlocklistArr.push({...item.val(), blockedkey: item.key})  
         })
         setBlockList (BlocklistArr);
     });
@@ -25,10 +25,28 @@ useEffect(()=>{
 /**
  * todo : UnblockUser function implement
  */
-const UnblockUser =(item = {})=>{
-    
+const UnblockUser = (item = {}) => {
     console.log(item);
     
+    const db = getDatabase();
+    const friendsRef = ref(db, 'Friends/');
+    set(push(friendsRef), {
+        ...item, // Spread the item object to include all its properties
+        CreatedAt: moment().format("MM, DD, YYYY, h:mm:ss a"),
+    })
+    .then(() => {
+        const removeFriend = ref(db, "BlockedUser/" + item.blockedkey);
+    remove(removeFriend)
+        .then(() => {
+            console.log('Friend removed successfully');
+        })
+        .catch((error) => {
+            console.error('Error removing friend:', error);
+        });
+    })
+    .catch((error) => {
+        console.error("Error unblocking user:", error);
+    });
 };
 
 

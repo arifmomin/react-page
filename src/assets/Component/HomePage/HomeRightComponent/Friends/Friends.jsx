@@ -32,10 +32,15 @@ const handleBlocked =(item = {})=>{
     console.log(item);
     const BlockedUserref = ref(db, "BlockedUser/");
     set(push(BlockedUserref), item);
-    const removeFriend = ref(db, "Friends/" + item.friendkey)
-    remove (removeFriend);
+    const removeFriend = ref(db, "Friends/" + item.friendkey);
+    remove(removeFriend)
+        .then(() => {
+            console.log('Friend removed successfully');
+        })
+        .catch((error) => {
+            console.error('Error removing friend:', error);
+        });
 };
-
   return (
         <div className='h-[50vh] w-[32.5%] bg-white rounded-[20px] drop-shadow-SearchShadow px-5 py-3 flex flex-col gap-y-[10px]'>
         <div className='flex justify-between items-center'>

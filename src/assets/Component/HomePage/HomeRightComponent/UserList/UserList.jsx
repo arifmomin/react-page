@@ -310,12 +310,12 @@ const UserList = () => {
         {userList?.map((item) => (
           <div className='HomePageAfter' key={item.userUid}>
             <div>
-              <picture><img src={item.UserPhotoUrl || esmern} alt={item.UserPhotoUrl} className='GroupListImage w-[50px] h-[50px]' /></picture>
+              <picture><img src={item.UserPhotoUrl} alt={item.UserPhotoUrl} className='GroupListImage w-[50px] h-[50px]' /></picture>
             </div>
             <div className='flex justify-between items-start w-[75%]'>
               <div>
-                <h3 className='groupListHeading text-base'>{item.userName || "Name Missing"}</h3>
-                <p className='GroupListSumHeading text-[12px]'>{item.userEmail || "Email missing"}</p>
+                <h3 className='groupListHeading text-base'>{item.userName}</h3>
+                <p className='GroupListSumHeading text-[12px]'>{item.userEmail}</p>
               </div>
               <div>
                 {isFriend(item) ? (
