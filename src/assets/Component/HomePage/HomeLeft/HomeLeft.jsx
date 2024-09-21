@@ -67,22 +67,22 @@ const HomeLeft = () => {
   </div>
   <div className='w-full'>
     <ul className='flex flex-col items-center'>
-      <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] w-full flex justify-center items-center z-50 ${location.pathname === "/" && " text-commonBackground before:absolute before:top-0 before:right-0 before:bg-white before:w-[90%] before:h-full before:rounded-l-2xl before:z-[-999] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
+      <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] w-full flex justify-center items-center z-[0] ${location.pathname === "/" && " text-commonBackground before:absolute before:top-0 before:right-0 before:bg-white before:w-[90%] before:h-full before:rounded-l-2xl before:z-[-999] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
         <Link className='w-full h-full flex justify-center items-center' to={"/"}>
         <SlHome/>
         </Link>
       </li>
-      <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] w-full flex justify-center items-center z-50 ${location.pathname === "/Chat" && " text-commonBackground before:absolute before:top-0 before:right-0 before:bg-white before:w-[90%] before:h-full before:rounded-l-2xl before:z-[-999] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
+      <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] w-full flex justify-center items-center z-[0] ${location.pathname === "/Chat" && " text-commonBackground before:absolute before:top-0 before:right-0 before:bg-white before:w-[90%] before:h-full before:rounded-l-2xl before:z-[-999] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
         <Link className='w-full h-full flex justify-center items-center' to={"/Chat"}>
         <AiFillMessage/>
         </Link>
       </li>
-      <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] w-full flex justify-center items-center z-50 ${location.pathname === "/Notification" && " text-commonBackground before:absolute before:top-0 before:right-0 before:bg-white before:w-[90%] before:h-full before:rounded-l-2xl before:z-[-999] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
+      <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] w-full flex justify-center items-center z-[0] ${location.pathname === "/Notification" && " text-commonBackground before:absolute before:top-0 before:right-0 before:bg-white before:w-[90%] before:h-full before:rounded-l-2xl before:z-[-999] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
         <Link className='w-full h-full flex justify-center items-center' to={"/Notification"}>
         <IoMdNotificationsOutline/>
         </Link>
       </li>
-      <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] w-full flex justify-center items-center z-50 ${location.pathname === "/Setting" && " text-commonBackground before:absolute before:top-0 before:right-0 before:bg-white before:w-[90%] before:h-full before:rounded-l-2xl before:z-[-999] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
+      <li className={`text-[36px] cursor-pointer relative py-5 text-[#BAD1FF] w-full flex justify-center items-center z-[0] ${location.pathname === "/Setting" && " text-commonBackground before:absolute before:top-0 before:right-0 before:bg-white before:w-[90%] before:h-full before:rounded-l-2xl before:z-[-999] after:absolute after:top-[0px] after:right-[0px] after:w-2 after:h-full after:bg-commonBackground after:rounded-l-3xl after:drop-shadow-custom"}`}>
       <Link className='w-full h-full flex justify-center items-center' to={"/Setting"}>
       <IoSettingsOutline/>
         </Link>

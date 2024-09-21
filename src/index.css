@@ -22,3 +22,12 @@
         @apply relative flex justify-start items-center gap-x-3 py-3 after:absolute after:bottom-0 after:left-[3%] after:w-[90%] after:h-[1px] after:bg-black after:opacity-[25%]
     }
 }
+.name_box_col .name {
+	width: 300px;
+	padding: 11px 14px 16px 14px;
+	border: 2px solid #191B1E;
+	background: #191B1E;
+	box-shadow: -1px -3px 3px 0px rgba(255, 255, 255, 0.20) inset, 1px 4px 2px -1px rgba(0, 0, 0, 0.70) inset;
+	border-radius: 6px;
+	transition: all linear .3s;
+}
