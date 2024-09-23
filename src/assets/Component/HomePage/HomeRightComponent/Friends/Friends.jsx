@@ -40,7 +40,8 @@ const handleBlocked =(item = {})=>{
         .catch((error) => {
             console.error('Error removing friend:', error);
         });
-};
+}; 
+
   return (
         <div className='h-[50vh] w-[32.5%] bg-white rounded-[20px] drop-shadow-SearchShadow px-5 py-3 flex flex-col gap-y-[10px]'>
         <div className='flex justify-between items-center'>
@@ -53,7 +54,7 @@ const handleBlocked =(item = {})=>{
   <span class="relative rounded-full h-5 w-5 bg-commonBackground text-xs text-white flex justify-center items-center">{FriendList?.length }</span>
    </span>
         </div>
-            <span className='text-xl text-commonBackground cursor-pointer'><BsThreeDotsVertical/></span>
+        <span className='text-xl text-commonBackground cursor-pointer'><BsThreeDotsVertical/></span>
         </div>
         <div className=' overflow-y-scroll scrollbar-thin scrollbar-thumb-commonBackground scrollbar-track-gray-200 '>
             {FriendList?.map ((item)=>(
