@@ -6,14 +6,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 @layer components{
-    .GroupListImage{
-        @apply w-[60px] h-[60px] rounded-full drop-shadow-md cursor-pointer;
+    .allImage{
+        @apply w-[50px] h-[50px] rounded-full drop-shadow-md cursor-pointer;
     }
-    .groupListHeading{
-        @apply text-[18px] text-black font-Poppins font-semibold cursor-pointer;
+    .allHeading{
+        @apply text-[16px] text-black font-Poppins font-semibold cursor-pointer capitalize;
     }
-    .GroupListSumHeading{
-        @apply text-[14px] font-medium font-Poppins text-[#4D4D4D] opacity-[75%] cursor-pointer;
+    .allSubHeading{
+        @apply text-[12px] font-medium font-Poppins text-[#4D4D4D] opacity-[75%] cursor-pointer;
     }
     .GroupListButton{
         @apply w-[87px] h-[30px] rounded-[5px] bg-commonBackground flex justify-center items-center text-white font-Poppins font-semibold text-[18px];
@@ -22,15 +22,7 @@
         @apply relative flex justify-start items-center gap-x-3 py-3 after:absolute after:bottom-0 after:left-[3%] after:w-[90%] after:h-[1px] after:bg-black after:opacity-[25%]
     }
 }
-.name_box_col .name {
-	width: 300px;
-	padding: 11px 14px 16px 14px;
-	border: 2px solid #191B1E;
-	background: #191B1E;
-	box-shadow: -1px -3px 3px 0px rgba(255, 255, 255, 0.20) inset, 1px 4px 2px -1px rgba(0, 0, 0, 0.70) inset;
-	border-radius: 6px;
-	transition: all linear .3s;
-}
-.img-preview{
+
+/* .img-preview{
     width: 300px !important;
-}
+} */

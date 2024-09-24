@@ -1,21 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import GroupList from '../Component/HomePage/HomeRightComponent/GroupList/GroupList.jsx'
 import Friends from '../Component/HomePage/HomeRightComponent/Friends/Friends.jsx'
 import UserList from '../Component/HomePage/HomeRightComponent/UserList/UserList.jsx'
 import FriendRequiest from '../Component/HomePage/HomeRightComponent/FriendRequiest/FriendRequiest.jsx'
 import MyGroup from '../Component/HomePage/HomeRightComponent/MyGroup/MyGroup.jsx'
 import BlockedUser from '../Component/HomePage/HomeRightComponent/BlockedUser/BlockedUser.jsx'
+import { Triangle } from 'react-loader-spinner'
 const Home = () => {
+  const [loading, setloading] = useState (true);
+  useEffect(()=>{
+    setTimeout (()=>{
+      setloading (false)
+    }, 3000 );
+  }, []);
   return (
-        <div className='w-full flex flex-wrap justify-between items-start gap-y-[15px]'>
-          <GroupList/>
-          <Friends/>
-          <UserList/>
-          <FriendRequiest/>
-          <MyGroup/>
-          <BlockedUser/>
-        </div>
+<div className='w-full flex flex-wrap justify-between items-start gap-y-[15px]'>
+        <GroupList/>
+        <Friends/>
+        <UserList/>
+        <FriendRequiest/>
+        <MyGroup/>
+        <BlockedUser/>
+          </div>
   )
-}
+};
 
 export default Home

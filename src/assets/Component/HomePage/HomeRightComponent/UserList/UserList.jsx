@@ -64,6 +64,7 @@ const UserList = () => {
       setFriendList(FriendsArr);
     });
   }, []);
+console.log(FriendList);
 
   /**
    * todo : Send a friend request
@@ -143,15 +144,15 @@ const UserList = () => {
         <span className='text-xl text-commonBackground cursor-pointer'><BsThreeDotsVertical /></span>
       </div>
       <div className='h-full w-full overflow-y-scroll scrollbar-thin scrollbar-thumb-commonBackground scrollbar-track-gray-200'>
-        {userList?.map((item) => (
+        {userList?.length > 0 ? (userList?.map((item) => (
           <div className='HomePageAfter' key={item.userUid}>
             <div>
-              <picture><img src={item.UserPhotoUrl} alt={item.UserPhotoUrl} className='GroupListImage w-[50px] h-[50px]' /></picture>
+              <picture><img src={item.UserPhotoUrl} alt={item.UserPhotoUrl} className='allImage' /></picture>
             </div>
             <div className='flex justify-between items-start w-[75%]'>
               <div>
-                <h3 className='groupListHeading text-base'>{item.userName}</h3>
-                <p className='GroupListSumHeading text-[12px]'>{item.userEmail}</p>
+                <h3 className='allHeading'>{item.userName}</h3>
+                <p className='allSubHeading'>{item.userEmail}</p>
               </div>
               <div>
                 {isFriend(item) ? (
@@ -179,7 +180,10 @@ const UserList = () => {
               </div>
             </div>
           </div>
-        ))}
+        ))) : (<div className='w-full h-full flex justify-center items-center'>
+<div className=' text-base text-red-400 font-Nunito font-medium'>"Currently, no users are available."
+</div>
+      </div>) }
       </div>
     </div>
   );

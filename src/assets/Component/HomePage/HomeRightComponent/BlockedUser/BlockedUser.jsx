@@ -15,9 +15,13 @@ useEffect(()=>{
     onValue(starCountRef, (snapshot) => {
         const BlocklistArr = [];
         snapshot.forEach((item) =>{
-            if(auth.currentUser.uid === item.val().ReceivedFriendRequestuid)
+            if(auth.currentUser.uid === item.val().ReceivedFriendRequestuid){
                 BlocklistArr.push({...item.val(), blockedkey: item.key})  
-        })
+            }else if(auth.currentUser.uid === item.val().sendFriendRequestuid){
+                BlocklistArr.push({...item.val(), blockedkey: item.key})  
+            }
+        }
+    )
         setBlockList (BlocklistArr);
     });
 }, [])
@@ -65,16 +69,16 @@ const UnblockUser = (item = {}) => {
       <span className='text-xl text-commonBackground cursor-pointer'><BsThreeDotsVertical/></span>
   </div>
   <div className='h-full w-full overflow-y-scroll scrollbar-thin scrollbar-thumb-commonBackground scrollbar-track-gray-200'>
-      {BlockList?.map ((item)=>(
+      {BlockList?.length > 0 ? (BlockList?.map ((item)=>(
                       <div>
                       <div className='HomePageAfter'>
                       <div>
-                          <picture><img src={item.sendFriendRequestPhotoUrl || esmern} alt={esmern} className='GroupListImage w-[50px] h-[50px]'/></picture>
+                          <picture><img src={auth.currentUser.photoURL === item.sendFriendRequestPhotoUrl ? item.ReceivedFriendRequestPhotoUrl : auth.currentUser.photoURL === item.ReceivedFriendRequestPhotoUrl ? item.sendFriendRequestPhotoUrl : esmern} alt={esmern} className='allImage'/></picture>
                       </div>
                       <div className='flex justify-between items-start w-[75%]'>
                           <div>
-                              <h3 className='groupListHeading text-base'>{item.sendFriendRequestUserName || "No One"}</h3>
-                              <p className='GroupListSumHeading text-[12px]'>{moment(item.CreatedAt).toNow()}</p>
+                              <h3 className='allHeading'>{auth.currentUser.displayName === item.sendFriendRequestUserName ? item.ReceivedFriendRequestUserName : auth.currentUser.displayName === item.ReceivedFriendRequestUserName ? item.sendFriendRequestUserName : "No One"}</h3>
+                              <p className='allSubHeading'>{moment(item.CreatedAt).toNow()}</p>
                           </div>
                           <div>
                               <button className='GroupListButton text-base w-[94px]' onClick={(() => { UnblockUser (item)})}>Unblock</button>
@@ -82,7 +86,12 @@ const UnblockUser = (item = {}) => {
                       </div>
                   </div>
                       </div>
-      ))}
+      ))) : (<div className='w-full h-full flex justify-center items-center'>
+        <div className=' text-base text-red-400 font-Nunito font-medium'>"Your block list is currently empty."
+
+        </div>
+              </div>
+) }
 
   </div>
 </div>
