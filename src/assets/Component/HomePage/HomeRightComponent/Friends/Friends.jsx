@@ -32,7 +32,6 @@ const Friends = () => {
  * todo : handleBlocked function emplement
  */
 const handleBlocked =(item = {})=>{
-    console.log(item);
     const BlockedUserref = ref(db, "BlockedUser/");
     set(push(BlockedUserref), item);
     const removeFriend = ref(db, "Friends/" + item.friendkey);

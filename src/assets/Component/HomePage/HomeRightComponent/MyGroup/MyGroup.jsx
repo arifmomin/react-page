@@ -144,7 +144,9 @@ const customStyles = {
    setIsDropdownOpen(!isDropdownOpen);
  };
     const [allGroupList, setallGroupList] = useState ([]);
+    const [allGroupRequestList, setallGroupRequestList] = useState ([]);
     useEffect(()=>{
+      const fatchGroup = (() =>{
         const GroupListRef = dbref(db, 'Groups/');
         onValue(GroupListRef, (snapshot) => {
         const GroupBlankArr = [];
@@ -155,12 +157,35 @@ const customStyles = {
         });
         setallGroupList(GroupBlankArr);
 });
+      });
+      const fatchRequestGroup = (() =>{
+        const GroupListRef = dbref(db, 'GroupRequest/');
+        onValue(GroupListRef, (snapshot) => {
+        const GroupBlankArr = [];
+        snapshot.forEach((item) =>{    
+        GroupBlankArr.push({...item.val(), GroupRequestkey: item.key})
+        });
+        setallGroupRequestList(GroupBlankArr);
+});
+      });
+      fatchGroup ();
+      fatchRequestGroup();
     }, []);
+    console.log(allGroupRequestList);
+    console.log(allGroupList);
     
   return (
     <div className='w-[32.5%] h-[43vh] bg-white rounded-[20px] drop-shadow-SearchShadow px-5 py-3 flex flex-col gap-y-[10px]'>
         <div className='flex justify-between items-center'>
-            <h2 className='text-xl font-Poppins font-semibold text-black'>Groups List</h2>
+          <div className="relative">
+          <h2 className='text-xl font-Poppins font-semibold text-black'>My Group</h2>
+            <span className="absolute top-[-4px] right-[-20px] flex h-5 w-5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-commonBackground opacity-75"></span>
+            <span className="relative rounded-full h-5 w-5 bg-commonBackground text-xs text-white flex justify-center items-center">
+              {allGroupList?.length}
+            </span>
+          </span>
+          </div>
             <div className="relative">
       <button className=" text-xl text-commonBackground cursor-pointer" onClick={toggleDropdown}>
       <BsThreeDotsVertical/>
@@ -185,8 +210,18 @@ const customStyles = {
                               <p className='allSubHeading'>{item? item.GroupTagName : "Hi Guys, Wassup!"}</p>
                           </div>
                           <div>
-                              <p className='text-[12px] font-medium font-Poppins text-black opacity-[50%]'>{moment(item.CreatedAt).toNow()}</p>
+                          
+                            {
+                              allGroupRequestList?.map((group) => 
+                                group.Groupkey == item.Groupkey ?<div className="flex gap-x-1"> <button className="bg-blue-500 text-sm text-white font-Poppins font-normal px-3 py-2 rounded-md">Accept</button>
+                                  <button className="bg-red-500 text-sm text-white font-Poppins font-normal px-3 py-2 rounded-md">Cancle</button>
+                                  </div> : "nai"
+                              )
+                            }
+                              
+                          
                           </div>
+
                       </div>
                   </div>
                       </div>
