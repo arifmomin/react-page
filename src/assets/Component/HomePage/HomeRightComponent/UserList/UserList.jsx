@@ -143,17 +143,18 @@ console.log(FriendList);
         </div>
         <span className='text-xl text-commonBackground cursor-pointer'><BsThreeDotsVertical /></span>
       </div>
-      <div className='h-full w-full overflow-y-scroll scrollbar-thin scrollbar-thumb-commonBackground scrollbar-track-gray-200'>
+      <div className='h-full w-full overflow-y-scroll hide-scrollbar'>
         {userList?.length > 0 ? (userList?.map((item) => (
           <div className='HomePageAfter' key={item.userUid}>
+            <div className='flex gap-x-2 items-center'>
             <div>
               <picture><img src={item.UserPhotoUrl} alt={item.UserPhotoUrl} className='allImage' /></picture>
             </div>
-            <div className='flex justify-between items-start w-[75%]'>
               <div>
                 <h3 className='allHeading'>{item.userName}</h3>
                 <p className='allSubHeading'>{item.userEmail}</p>
               </div>
+            </div>
               <div>
                 {isFriend(item) ? (
                   // Show checkmark if user is already a friend
@@ -178,7 +179,6 @@ console.log(FriendList);
                   </button>
                 )}
               </div>
-            </div>
           </div>
         ))) : (<div className='w-full h-full flex justify-center items-center'>
 <div className=' text-base text-red-400 font-Nunito font-medium'>"Currently, no users are available."

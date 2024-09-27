@@ -72,17 +72,18 @@ const HandleFriends = (() =>{
         </div>
         <span className='text-xl text-commonBackground cursor-pointer'><BsThreeDotsVertical/></span>
         </div>
-        <div className=' w-full h-full overflow-y-scroll scrollbar-thin scrollbar-thumb-commonBackground scrollbar-track-gray-200 '>
+        <div className=' w-full h-full overflow-y-scroll hide-scrollbar'>
             {FriendList?.length > 0 ? ( FriendList?.map ((item)=>(
                             <div key={item.key}>
                             <div className='HomePageAfter'>
+                                <div className='flex gap-x-2 items-center'>
                             <div>
                                 <picture><img src={auth.currentUser.photoURL === item.sendFriendRequestPhotoUrl ? item.ReceivedFriendRequestPhotoUrl : auth.currentUser.photoURL === item.ReceivedFriendRequestPhotoUrl ? item.sendFriendRequestPhotoUrl : user} alt={user} className='allImage'/></picture>
                             </div>
-                            <div className='flex justify-between items-start w-[75%]'>
                                 <div>
                                     <h3 className='allHeading'>{auth.currentUser.displayName === item.sendFriendRequestUserName ? item.ReceivedFriendRequestUserName : auth.currentUser.displayName === item.ReceivedFriendRequestUserName? item.sendFriendRequestUserName : "no name"}</h3>
                                     <p className='allSubHeading'>{moment(item.CreatedAt).toNow()}</p>
+                                </div>
                                 </div>
                                 <div>
                                     <button className=' w-[100px] h-[35px] rounded-md text-base text-black font-Nunito font-medium bg-[#D8DADF] flex justify-center items-center' onClick={HandleFriends}> <span className='text-[18px] text-[#00000075] pr-[5px]'><FaUserCheck/></span> Friends</button>
@@ -93,7 +94,6 @@ const HandleFriends = (() =>{
                                    </div>
                                  )}
                                 </div>
-                            </div>
                         </div>
                             </div>
             ))) : (<div className='w-full h-full flex justify-center items-center'>

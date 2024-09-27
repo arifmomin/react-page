@@ -22,17 +22,17 @@ const GroupList = () => {
         setallGroupList(GroupBlankArr);
 });
     }, []);
-
-
-const handleGroupRequest = ((item = {}) =>{
-    set(push(ref(db, "GroupRequest/")), {
-         ...item,
+const handleGroupRequest = ((item = {}) => {
+    const newGroupRequestRef = push(ref(db, "GroupRequest/"));
+    set(newGroupRequestRef, {
+        ...item,
         WhoJoinGroupUid: auth.currentUser.uid,
-        WhoJoinGroupName : auth.currentUser.displayName,
+        WhoJoinGroupName: auth.currentUser.displayName,
         WhoJoinGroupEmail: auth.currentUser.email,
         WhoJoinGroupPhotoUrl: auth.currentUser.photoURL,
         CreatedAt: moment().format("MM, DD, YYYY, h:mm:ss a"),
-    } ) 
+        GroupRequestkey: newGroupRequestRef.key // Store the key
+    });
 });
 /**
  * todo: Group Join requiest implement
@@ -42,20 +42,18 @@ useEffect(()=>{
     onValue(GroupListRef, (snapshot) => {
     const GroupRequiestBlankArr = [];
     snapshot.forEach((item) =>{
-            GroupRequiestBlankArr.push(item.val().Groupkey + item.val().WhoJoinGroupUid);
+            GroupRequiestBlankArr.push (item.val().Groupkey + item.val().WhoJoinGroupUid);
+            
     });
     setallGroupListRequiest(GroupRequiestBlankArr);
 });
 }, []);
-console.log(allGroupListRequiest);
-
 /**
  * todo: handleGroupcancleRequest button implement
  */
     const handleGroupcancleRequest = (item)=>{
-        const removeFndReq = (ref(db, "GroupRequest/"));    
-        remove(removeFndReq);
-    };
+        remove(ref(db, `GroupRequest/`))
+        };
   return (
     <div className='w-[32.5%] h-[50vh]'>
 <div>
@@ -79,27 +77,27 @@ console.log(allGroupListRequiest);
       </button>
     </div>
         </div>
-        <div className=' w-full h-[31vh] overflow-y-scroll scrollbar-thin scrollbar-thumb-commonBackground scrollbar-track-gray-200'>
+        <div className=' w-full h-[31vh] overflow-y-scroll hide-scrollbar'>
             {allGroupList.map ((item)=>(
                             <div className='' key={item.key}>
                             <div className='HomePageAfter'>
-                            <div>
+                                <div className="flex gap-x-2 items-center">
+                                <div>
                                 <picture><img src={item? item.GroupPhotoUrl : esmern} alt={item? item.GroupPhotoUrl : esmern} className='allImage w-[60px] h-[60px]'/></picture>
                             </div>
-                            <div className='flex justify-between items-start w-[75%]'>
-                                <div>
+                            <div>
                                     <h3 className='allHeading text-[18px]'>{item? item.GroupName : "Name missing"}</h3>
                                     <p className='allSubHeading text-[14px]'>{item? item.GroupTagName : "tag name missing"}</p>
+                                </div>
                                 </div>
                                 <div>
                                     {
                                         allGroupListRequiest?.includes(item.Groupkey + auth.currentUser.uid) ? (
-                                        <button className='GroupListButton' onClick={() => handleGroupcancleRequest (item)}>Cancle</button>) : (
+                                        <button className='GroupListButton' onClick={(() =>{handleGroupcancleRequest (item)})}>Cancle</button>) : (
                                         <button className='GroupListButton'onClick={() => handleGroupRequest (item)}>join</button>)
                                     }
                                     
                                 </div>
-                            </div>
                         </div>
                             </div>
             ))}

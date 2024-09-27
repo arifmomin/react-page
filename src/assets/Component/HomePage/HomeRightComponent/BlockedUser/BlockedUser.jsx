@@ -68,22 +68,22 @@ const UnblockUser = (item = {}) => {
 </div>
       <span className='text-xl text-commonBackground cursor-pointer'><BsThreeDotsVertical/></span>
   </div>
-  <div className='h-full w-full overflow-y-scroll scrollbar-thin scrollbar-thumb-commonBackground scrollbar-track-gray-200'>
+  <div className='h-full w-full overflow-y-scroll hide-scrollbar'>
       {BlockList?.length > 0 ? (BlockList?.map ((item)=>(
                       <div>
                       <div className='HomePageAfter'>
-                      <div>
+                        <div className='flex gap-x-2 items-center'>
+                        <div>
                           <picture><img src={auth.currentUser.photoURL === item.sendFriendRequestPhotoUrl ? item.ReceivedFriendRequestPhotoUrl : auth.currentUser.photoURL === item.ReceivedFriendRequestPhotoUrl ? item.sendFriendRequestPhotoUrl : esmern} alt={esmern} className='allImage'/></picture>
                       </div>
-                      <div className='flex justify-between items-start w-[75%]'>
                           <div>
                               <h3 className='allHeading'>{auth.currentUser.displayName === item.sendFriendRequestUserName ? item.ReceivedFriendRequestUserName : auth.currentUser.displayName === item.ReceivedFriendRequestUserName ? item.sendFriendRequestUserName : "No One"}</h3>
                               <p className='allSubHeading'>{moment(item.CreatedAt).toNow()}</p>
                           </div>
+                        </div>
                           <div>
                               <button className='GroupListButton text-base w-[94px]' onClick={(() => { UnblockUser (item)})}>Unblock</button>
                           </div>
-                      </div>
                   </div>
                       </div>
       ))) : (<div className='w-full h-full flex justify-center items-center'>

@@ -24,8 +24,6 @@ useEffect (()=>{
     
     setFriendRequestList(FriendRequestArr);
 });
-console.log(FriendRequestList);
-
 }, []);
 /**
  * todo : handleAcceptFndReq button implement
@@ -65,18 +63,20 @@ return (
    </div>
         <span className='text-xl text-commonBackground cursor-pointer'><BsThreeDotsVertical/></span>
     </div>
-    <div className='h-full w-full overflow-y-scroll scrollbar-thin scrollbar-thumb-commonBackground scrollbar-track-gray-200'>
+    <div className='h-full w-full overflow-y-scroll hide-scrollbar'>
         {FriendRequestList?.length > 0 ? (FriendRequestList?.map ((item)=>(
                         <div key={item.FriendRequestKey}>
                         <div className='HomePageAfter'>
-                        <div>
+                            <div className='flex gap-x-2 items-center'>
+                            <div className='w-[50px]'>
                             <picture><img src={item.sendFriendRequestPhotoUrl || user} alt={item.sendFriendRequestPhotoUrl || user} className='allImage '/></picture>
                         </div>
-                        <div className='flex justify-between items-start w-[80%]'>
                             <div>
                                 <h3 className='allHeading'> {item.sendFriendRequestUserName}</h3>
                                 <p className='allSubHeading'>{item.sendFriendRequestUserEmail}</p>
                             </div>
+                            </div>
+                        <div className='flex justify-between items-start'>
                             <div className='flex justify-center items-center gap-x-1'>
                                 <button className='GroupListButton w-[60px] text-[12px]' onClick={(()=> handleAcceptFndReq (item))}>Confirm</button>
                                 <button className='GroupListButton w-[60px] text-[12px] bg-[#D8DADF] text-black text-opacity-55' onClick={()=> HandleRejectFndReq (item)}>Delete</button>

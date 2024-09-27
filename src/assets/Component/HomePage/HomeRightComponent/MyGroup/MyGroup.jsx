@@ -8,7 +8,7 @@ import { Errortoast, successtoast} from "../../../../../../Utils/tostify/tostify
 import { getStorage, ref, uploadString, getDownloadURL} from "firebase/storage";
 import { v4 as uuidv4 } from 'uuid';
 import { GrGroup } from "react-icons/gr";
-import { getDatabase, ref as dbref, set, push, onValue } from "firebase/database";
+import { getDatabase, ref as dbref, set, push, onValue, remove } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import moment from "moment";
 import { ThreeDots } from 'react-loader-spinner'
@@ -171,9 +171,23 @@ const customStyles = {
       fatchGroup ();
       fatchRequestGroup();
     }, []);
-    console.log(allGroupRequestList);
-    console.log(allGroupList);
     
+    const handleGroupRequestAccept = (group) =>{
+      set(dbref(db, "GroupMember"),{
+        ...group,
+        CreatedAt: moment().format("MM, DD, YYYY, h:mm:ss a"),
+      }).then(() =>{
+        remove (dbref(db, `GroupRequest/${group.GroupRequestkey}`));
+      })
+      console.log(group);
+    };
+    const handleGroupRequestCancle = ((group = {}) =>{
+      remove (dbref(db, `GroupRequest/${group.GroupRequestkey}`));
+    });
+    /**
+     * todo: Group member data fetch
+     */
+
   return (
     <div className='w-[32.5%] h-[43vh] bg-white rounded-[20px] drop-shadow-SearchShadow px-5 py-3 flex flex-col gap-y-[10px]'>
         <div className='flex justify-between items-center'>
@@ -197,31 +211,29 @@ const customStyles = {
       )}
     </div>
         </div>
-  <div className='h-full w-full overflow-y-scroll scrollbar-thin scrollbar-thumb-commonBackground scrollbar-track-gray-200'>
+  <div className='h-full w-full overflow-y-scroll hide-scrollbar'>
       {allGroupList?.length > 0 ? (allGroupList?.map ((item)=>(
                       <div>
                       <div className='HomePageAfter'>
+                      <div className="flex gap-x-2 items-center">
                       <div>
                           <picture><img src={item? item.GroupPhotoUrl : user} alt={item? item.GroupPhotoUrl : user} className='allImage'/></picture>
                       </div>
-                      <div className='flex justify-between items-start w-[75%]'>
-                          <div>
+                      <div>
                               <h3 className='allHeading'>{item? item.GroupName : "Laughter Lounge"}</h3>
                               <p className='allSubHeading'>{item? item.GroupTagName : "Hi Guys, Wassup!"}</p>
                           </div>
+                      </div>
+
                           <div>
                           
                             {
                               allGroupRequestList?.map((group) => 
-                                group.Groupkey == item.Groupkey ?<div className="flex gap-x-1"> <button className="bg-blue-500 text-sm text-white font-Poppins font-normal px-3 py-2 rounded-md">Accept</button>
-                                  <button className="bg-red-500 text-sm text-white font-Poppins font-normal px-3 py-2 rounded-md">Cancle</button>
-                                  </div> : "nai"
+                                group.Groupkey == item.Groupkey  && (<div className="flex gap-x-1"> <button className="bg-blue-500 text-sm text-white font-Poppins font-normal px-3 py-[5px] rounded-md" onClick={() => handleGroupRequestAccept (group)}>Accept</button>
+                                  <button className="bg-red-500 text-sm text-white font-Poppins font-normal px-3 py-[5px] rounded-md" onClick={() => handleGroupRequestCancle (group)}>Cancle</button>
+                                  </div>)
                               )
                             }
-                              
-                          
-                          </div>
-
                       </div>
                   </div>
                       </div>

@@ -11,11 +11,12 @@ import {
 } from "react-router-dom";
 import Home from "./assets/Home/Home";
 import RootLayout from "./assets/RootLayout/RootLayout";
+import Chat from "./assets/Chat/Chat"
 const router = createBrowserRouter (createRoutesFromElements(
   <Route>
     <Route path="/" element = {<RootLayout/>}>
     <Route index element = {<Home/>}></Route>
-    <Route path="/Chat" element = {"this is chat page"}></Route>
+    <Route path="/Chat" element = {<Chat/>}></Route>
     <Route path="/Notification" element = {"this is Notification page"}></Route>
     <Route path="/Setting" element = {"this is setting page"}></Route>
     </Route>

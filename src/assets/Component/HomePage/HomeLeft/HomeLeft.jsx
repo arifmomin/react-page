@@ -37,7 +37,7 @@ const HomeLeft = () => {
   },[]); 
   return (
 <div>
-<div className='bg-commonBackground w-[186px] h-[95vh] flex flex-col items-center gap-y-[50px] rounded-[20px]'>
+<div className='bg-commonBackground w-[186px] h-[95vh] flex flex-col items-center gap-y-[40px] rounded-[20px]'>
   <div className='flex flex-col items-center justify-center gap-y-2 rounded-full mt-9 '>
 <div className='relative cursor-pointer group'>
 <picture><img src={user && user.UserPhotoUrl ? user.UserPhotoUrl : userPhoto} alt={userPhoto} className='w-[100px] h-[100px] rounded-full bg-white object-cover transition-opacity duration-200 group-hover:opacity-50'/>
@@ -90,7 +90,10 @@ const HomeLeft = () => {
     </ul>
   </div>
   <div>
-    <span className='text-[38px] text-[#BAD1FF]'><TbLogout/></span>
+  <Link className='text-[38px] text-[#BAD1FF]' to={"/Login"}>
+      <TbLogout/>
+        </Link>
+    
   </div>
   </div>
 
