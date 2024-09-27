@@ -22,17 +22,15 @@ const GroupList = () => {
         setallGroupList(GroupBlankArr);
 });
     }, []);
-const handleGroupRequest = ((item = {}) => {
-    const newGroupRequestRef = push(ref(db, "GroupRequest/"));
-    set(newGroupRequestRef, {
-        ...item,
+const handleGroupRequest = ((item = {}) =>{
+    set(push(ref(db, "GroupRequest/")), {
+         ...item,
         WhoJoinGroupUid: auth.currentUser.uid,
-        WhoJoinGroupName: auth.currentUser.displayName,
+        WhoJoinGroupName : auth.currentUser.displayName,
         WhoJoinGroupEmail: auth.currentUser.email,
         WhoJoinGroupPhotoUrl: auth.currentUser.photoURL,
         CreatedAt: moment().format("MM, DD, YYYY, h:mm:ss a"),
-        GroupRequestkey: newGroupRequestRef.key // Store the key
-    });
+    } ) 
 });
 /**
  * todo: Group Join requiest implement
@@ -77,7 +75,7 @@ useEffect(()=>{
       </button>
     </div>
         </div>
-        <div className=' w-full h-[31vh] overflow-y-scroll hide-scrollbar'>
+        <div className=' w-full h-[31vh] overflow-y-scroll scrollbar-thin scrollbar-thumb-commonBackground scrollbar-track-gray-200'>
             {allGroupList.map ((item)=>(
                             <div className='' key={item.key}>
                             <div className='HomePageAfter'>
