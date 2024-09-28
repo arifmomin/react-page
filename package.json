@@ -9,6 +9,7 @@
     "deploy": "gh-pages -d build"
   },
   "dependencies": {
+    "emoji-picker-react": "^4.12.0",
     "firebase": "^10.12.3",
     "moment": "^2.30.1",
     "react": "^18.2.0",

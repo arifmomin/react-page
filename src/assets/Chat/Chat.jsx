@@ -1,10 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Search from '../Component/HomePage/HomeRightComponent/Search/Search'
 import { BsCamera, BsEmojiSmile, BsThreeDotsVertical } from 'react-icons/bs'
 import esmern from "../Component/HomePage/HomeRightComponent/GroupList/GroupListImage/esmern.png"
 import user from "./ChatImage/user.png"
 import { IoIosSend } from 'react-icons/io'
+import EmojiPicker from 'emoji-picker-react';
 const Chat = () => {
+    const [Emoji, setEmoji] = useState (false);
+    const [message, setmessage] = useState ("");
+    // handle emoji icon
+    const handleEmoji = () =>{
+        setEmoji (!Emoji);
+    }
+    // ===========handleemojiclick function implement
+    const handleemojiclick = ((event) =>{
+        // console.log(event.emoji);
+        setmessage((prev) =>{
+            return `${prev}${event?.emoji}`;
+        })
+    });
+    // ==========handleInputValue function implement
+    const handleInputValue = ((event) =>{
+        const {value} = event.target;  
+        setmessage(value);
+    });
   return (
     <div className='w-full h-[94vh] flex gap-x-7'>
         <div className='w-[35%] flex flex-col gap-y-[27px]'>
@@ -103,7 +122,7 @@ const Chat = () => {
             </div>
             </div>
             </div>
-            <div className='w-full h-[75%] p-5 overflow-y-scroll hide-scrollbar'>
+            <div className='w-full h-[75%] p-5 overflow-y-scroll hide-scrollbar background-img'>
                 <div className='flex flex-col gap-y-5 justify-between items-baseline'>
                     <div className='w-full flex justify-starts'>
                     <div className='w-[55%] flex flex-col items-start'>
@@ -148,11 +167,17 @@ const Chat = () => {
               <div className='w-full h-[10%]'>
                 <div className=' w-full h-full flex justify-between items-end'>
                 <div className='w-[92%] h-[45px] rounded-xl bg-[#F1F1F1] pl-5 pr-3 flex items-center'>
-                    <input type="text" placeholder='Type a message' name='message' className='message outline-0 w-[90%] h-full bg-transparent text-base text-black font-Poppins font-medium ' id='message' />
+                    <input type="text" placeholder='Type a message' name='message' className='message outline-0 w-[90%] h-full bg-transparent text-base text-black font-Poppins font-medium ' id='message' value={message} onChange={handleInputValue}/>
                     <div className='flex gap-x-1 w-[13%] justify-end items-center'>
-                    <span className='w-[35px] h-[35px] flex justify-center items-center rounded-md hover:bg-[#e0e0e0db] text-xl text-[#707070] cursor-pointer'><BsEmojiSmile/></span>
-                    <span className='w-[35px] h-[35px] flex justify-center items-center rounded-md hover:bg-[#e0e0e0db] text-xl text-[#707070] cursor-pointer'><BsCamera/></span>
+                    <div className='relative'>
+                    {
+                            Emoji && <span className='absolute bottom-[40px] right-0'><EmojiPicker onEmojiClick={handleemojiclick}/></span>
+                        }
+                        <span className='w-[35px] h-[35px] flex justify-center items-center rounded-md hover:bg-[#e0e0e0db] text-xl text-[#707070] cursor-pointer' onClick={handleEmoji}><BsEmojiSmile/></span>
+                    </div>                    
+                    <div><span className='w-[35px] h-[35px] flex justify-center items-center rounded-md hover:bg-[#e0e0e0db] text-xl text-[#707070] cursor-pointer'><BsCamera/></span></div>
                     </div>
+                    
                 </div>
                 <div className='w-[45px] h-[45px] bg-[#5F35F5] rounded-xl flex justify-center items-center cursor-pointer group'>
                     <span className=' text-white text-2xl group-hover:rotate-45 ease-linear duration-200'><IoIosSend /></span>
