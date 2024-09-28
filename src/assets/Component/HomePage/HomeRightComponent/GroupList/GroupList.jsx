@@ -75,7 +75,7 @@ useEffect(()=>{
       </button>
     </div>
         </div>
-        <div className=' w-full h-[31vh] overflow-y-scroll scrollbar-thin scrollbar-thumb-commonBackground scrollbar-track-gray-200'>
+        <div className=' w-full h-[31vh] overflow-y-scroll hide-scrollbar'>
             {allGroupList.map ((item)=>(
                             <div className='' key={item.key}>
                             <div className='HomePageAfter'>
