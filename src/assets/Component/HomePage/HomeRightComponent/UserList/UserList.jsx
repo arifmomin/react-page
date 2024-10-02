@@ -157,12 +157,10 @@ console.log(FriendList);
             </div>
               <div>
                 {isFriend(item) ? (
-                  // Show checkmark if user is already a friend
                   <button className='GroupListButton w-[30px] h-[30px] text-[16px]' disabled>
                     <FaCheck />
                   </button>
                 ) : isFriendRequestSent(item) ? (
-                  // Show cancel button if friend request is sent
                   <button
                     className='GroupListButton w-[30px] h-[30px] text-[16px]'
                     onClick={() => handleFriendRequestCancel(item)}
@@ -170,7 +168,6 @@ console.log(FriendList);
                     -
                   </button>
                 ) : (
-                  // Show "+" button if no friend request is sent
                   <button
                     className='GroupListButton w-[30px] h-[30px] text-[16px]'
                     onClick={() => handleFriendRequest(item)}
