@@ -145,7 +145,7 @@ console.log(FriendList);
       </div>
       <div className='h-full w-full overflow-y-scroll hide-scrollbar'>
         {userList?.length > 0 ? (userList?.map((item) => (
-          <div className='HomePageAfter' key={item.userUid}>
+          <div className='HomePageAfter' key={item.userKey}>
             <div className='flex gap-x-2 items-center'>
             <div>
               <picture><img src={item.UserPhotoUrl} alt={item.UserPhotoUrl} className='allImage' /></picture>
