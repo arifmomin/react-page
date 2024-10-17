@@ -47,7 +47,6 @@ const handleBlocked =(item = {})=>{
 const HandleFriends = (() =>{
     setFriendsDropDown (!FriendsDropDown);
    });
-
    const handleUnFriend = ((item = {})=>{
     const handleUnFriendref = ref(db, "Friends/" + item.friendkey);
     remove (handleUnFriendref).then(()=>{

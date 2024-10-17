@@ -1,13 +1,55 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Search from '../Component/HomePage/HomeRightComponent/Search/Search'
 import { BsCamera, BsEmojiSmile, BsThreeDotsVertical } from 'react-icons/bs'
 import esmern from "../Component/HomePage/HomeRightComponent/GroupList/GroupListImage/esmern.png"
 import user from "./ChatImage/user.png"
 import { IoIosSend } from 'react-icons/io'
 import EmojiPicker from 'emoji-picker-react';
+import { getDatabase, onValue, ref, push } from "firebase/database";
+import { getAuth } from 'firebase/auth'
+import moment from 'moment'
 const Chat = () => {
+    const auth = getAuth();
+    const db = getDatabase();
     const [Emoji, setEmoji] = useState (false);
     const [message, setmessage] = useState ("");
+    const [allGroupList, setallGroupList] = useState([]);
+    const [allFriend, setallFriend] = useState([]);
+    /**
+     * todo: firebase data 
+     */
+    useEffect(()=>{
+        const GroupListRef = ref(db, 'Groups/');
+        onValue(GroupListRef, (snapshot) => {
+        const GroupBlankArr = [];
+        snapshot.forEach((item) =>{
+            if(item.val().WhoCreateGroupUid !== auth.currentUser.uid){
+                GroupBlankArr.push({...item.val(), Groupkey: item.key})
+            }
+        });
+        setallGroupList(GroupBlankArr);
+});
+    }, []);
+/**
+ * todo: firebase Friend datafatch
+ */
+useEffect(() =>{
+    const friendsref = ref(db, 'Friends/');
+    onValue(friendsref, (snapshot) =>{
+        const FriendsArr = [];
+        snapshot.forEach((item) =>{
+            if(auth.currentUser.uid === item.val().sendFriendRequestuid){
+                FriendsArr.push({...item.val(), friendkey : item.key});
+            }
+                        
+        });
+        setallFriend(FriendsArr);
+    });
+
+}, []);
+    console.log(allFriend);
+    
+    
     // handle emoji icon
     const handleEmoji = () =>{
         setEmoji (!Emoji);
@@ -27,8 +69,8 @@ const Chat = () => {
   return (
     <div className='w-full h-[94vh] flex gap-x-7'>
         <div className='w-[35%] flex flex-col gap-y-[27px]'>
-        <div className='w-full h-[50%] flex flex-col gap-y-[4%]'>
-<div className=' h-[15%]'>
+        <div className='w-full h-[48%] flex flex-col gap-y-[4%]'>
+            <div className=' h-[15%]'>
             <Search/>
         </div>
     <div className=' bg-white h-[85%] rounded-[20px] drop-shadow-SearchShadow px-5 py-3 flex flex-col gap-y-[10px]'>
@@ -38,7 +80,7 @@ const Chat = () => {
             <span className="absolute top-[-4px] right-[-20px] flex h-5 w-5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-commonBackground opacity-75"></span>
             <span className="relative rounded-full h-5 w-5 bg-commonBackground text-xs text-white flex justify-center items-center">
-              
+              {allGroupList?.length}
             </span>
           </span>
           </div>
@@ -49,16 +91,16 @@ const Chat = () => {
     </div>
         </div>
         <div className=' w-full h-full hide-scrollbar'>
-        {Array.from({ length: 10 }).map((_, index) =>(
-                            <div className=''>
+        {allGroupList.map((item) =>(
+                            <div key={item.key}>
                             <div className='HomePageAfter'>
                                 <div className='flex gap-x-3 items-center'>
                                 <div>
-                                <picture><img src={esmern} alt="esmern" className='allImage w-[60px] h-[60px]' /></picture>
+                                <picture><img src={item? item.GroupPhotoUrl : esmern} alt="esmern" className='allImage w-[60px] h-[60px]' /></picture>
                             </div>
                             <div>
-                                    <h3 className='allHeading text-[18px]'> "Name missing"</h3>
-                                    <p className='allSubHeading text-[14px]'> "tag name missing"</p>
+                                    <h3 className='allHeading text-[18px]'>{item? item.GroupName : 'Name Missing'}</h3>
+                                    <p className='allSubHeading text-[14px]'>{item? item.GroupTagName : 'Group Tag Name Missing'}</p>
                                 </div>
                                 </div>
                         </div>
@@ -67,15 +109,15 @@ const Chat = () => {
         </div>
     </div>
     </div>
-    <div className='w-full h-[50%]'>
-    <div className=' bg-white h-[92%] rounded-[20px] drop-shadow-SearchShadow px-5 py-3 flex flex-col gap-y-[10px]'>
+    <div className='w-full h-[48%] flex justify-end flex-col'>
+    <div className=' bg-white h-full rounded-[20px] drop-shadow-SearchShadow px-5 py-3 flex flex-col gap-y-[10px]'>
         <div className='flex justify-between items-center'>
         <div className="relative">
-          <h2 className='text-xl font-Poppins font-semibold text-black'>Groups</h2>
+          <h2 className='text-xl font-Poppins font-semibold text-black'>Friends</h2>
             <span className="absolute top-[-4px] right-[-20px] flex h-5 w-5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-commonBackground opacity-75"></span>
             <span className="relative rounded-full h-5 w-5 bg-commonBackground text-xs text-white flex justify-center items-center">
-              
+              {allFriend?.length}
             </span>
           </span>
           </div>
@@ -86,16 +128,16 @@ const Chat = () => {
     </div>
         </div>
         <div className=' w-full h-full hide-scrollbar'>
-        {Array.from({ length: 10 }).map((_, index) =>(
-                            <div className=''>
+        {allFriend.map((item) =>(
+                            <div key={item.key}>
                             <div className='HomePageAfter'>
                                 <div className='flex gap-x-3 items-center'>
                                 <div>
-                                <picture><img src={esmern} alt="esmern" className='allImage w-[60px] h-[60px]' /></picture>
+                                <picture><img src={item? item.ReceivedFriendRequestUserName : esmern} alt="esmern" className='allImage w-[60px] h-[60px]' /></picture>
                             </div>
                             <div>
-                                    <h3 className='allHeading text-[18px]'> "Name missing"</h3>
-                                    <p className='allSubHeading text-[14px]'> "tag name missing"</p>
+                                    <h3 className='allHeading text-[18px]'>{item? item.ReceivedFriendRequestUserName : 'Name missing'}</h3>
+                                    <p className='allSubHeading text-[14px]'>{item? moment(item.CreatedAt).toNow() : 'Time Missing'}</p>
                                 </div>
                                 </div>
                         </div>

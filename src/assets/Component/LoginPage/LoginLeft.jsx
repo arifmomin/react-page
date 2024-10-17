@@ -18,6 +18,7 @@ const LoginLeft = () => {
         email : "",
         password : "",
     });
+    
     const [loginError, setloginError]= useState({
         emailError: "",
         passwordError: "",
