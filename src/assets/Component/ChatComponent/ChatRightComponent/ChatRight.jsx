@@ -59,8 +59,7 @@ const ChatRight = () => {
         }).finally(() => {
             setmessage('');
             setimage(null);
-            console.log(image);
-            
+            console.log(image);  
         });
     }
   
@@ -158,9 +157,9 @@ console.log(Messagedata);
                   <div className='w-[55%] flex flex-col items-start'>{Message.Message != ''? (
                     <span className='w-fit text-base font-Poppins font-medium text-black px-6 py-3 rounded-lg bg-[#F1F1F1] relative left-message'>{Message.Message}</span>
                     ) : (
-                      <picture><img src={Message.image} alt="" /></picture>
+                      <picture><img className='w-full h-fit' src={Message.image} alt={Message.image} /></picture>
                     )}
-                     <span className='text-[12px] text-black text-opacity-[25%] font-medium font-Poppins mt-1'>Today, 2:01pm</span>
+                     <span className='text-[12px] text-black text-opacity-[25%] font-medium font-Poppins mt-1'>{Message? moment(Message.CreatedAt).toNow() : 'Time Missing'}</span>
                   </div>
               </div>
                     ) : (
@@ -169,8 +168,9 @@ console.log(Messagedata);
                       {Message.Message != ''? (
                         <span className='w-fit text-base font-Poppins font-medium text-white px-6 py-3 rounded-lg bg-[#5F35F5] relative right-message text-wrap'>{Message.Message}</span>
                       ) : (
-                        <picture><img src={Message.image} alt="" /></picture>
+                        <picture><img className='w-full h-fit' src={Message.image} alt={Message.image} /></picture>
                       )}
+                      <span className='text-[12px] text-black text-opacity-[25%] font-medium font-Poppins mt-1'>{Message? moment(Message.CreatedAt).toNow() : 'Time Missing'}</span>
                       </div>
                   </div>
                     ) 
