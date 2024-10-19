@@ -32,13 +32,16 @@ useEffect (()=>{
 const handleAcceptFndReq = ((item)=>{
     set(push (ref(db, "Friends/")),{
         ...item,
-        CreatedAt: moment().format("MM, DD, YYYY, h:mm:ss a"),
+        CreatedAt: moment().format("MM, DD, YYYY, h:mm:ss a"),        
         FriendRequestKey : null,
+        ReceivedFriendRequestPhotoUrl : auth.currentUser.photoURL,
     }).then(()=>{
         const FriendReqRef = (ref(db, "FriendRequest/" + item.FriendRequestKey))
         remove(FriendReqRef);
     });
 });
+
+
 
 /**
  * todo : HandleRejectFndReq button implement

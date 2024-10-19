@@ -8,7 +8,7 @@ import { IoMdNotificationsOutline } from 'react-icons/io'
 import { Link, useLocation,} from 'react-router-dom'
 import { Uploader } from "uploader";
 import { UploadButton } from "react-uploader";
-import { getAuth, updateProfile  } from 'firebase/auth'
+import { getAuth, updateProfile, signOut  } from 'firebase/auth'
 import { getDatabase, ref, onValue, update } from "firebase/database";
 
 const uploader = Uploader({
@@ -35,6 +35,14 @@ const HomeLeft = () => {
     }
     getUserData ();
   },[]); 
+  // ================ sign out button implement
+  const handleSignOut = () =>{
+    signOut(auth).then(() => {
+      
+    }).catch((error) => {
+      // An error happened.
+    });
+  };
   return (
 <div>
 <div className='bg-commonBackground w-[186px] h-[95vh] flex flex-col items-center gap-y-[40px] rounded-[20px]'>
@@ -90,7 +98,7 @@ const HomeLeft = () => {
     </ul>
   </div>
   <div>
-  <Link className='text-[38px] text-[#BAD1FF]' to={"/Login"}>
+  <Link className='text-[38px] text-[#BAD1FF]' to={'/login'} onClick={handleSignOut}>
       <TbLogout/>
         </Link>
     
