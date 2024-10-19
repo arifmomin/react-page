@@ -72,3 +72,30 @@
     opacity: -0.5;
     z-index: -1;
   }
+.imgafter{
+    z-index: 999;
+}
+.right-image::after{
+    content: '';
+    position: absolute;
+    top: 0px;
+    right: -12px;
+    width: 0;
+    height: 0;
+    border-right: 50px solid transparent;
+    border-top: 50px solid #5f35f5;
+    content: '';
+    z-index: -1; 
+}
+.left-image::after{
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: -12px;
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-top: 50px solid #eaeaea;
+    content: '';
+    z-index: -1; 
+}

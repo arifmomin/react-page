@@ -98,7 +98,7 @@ const HomeLeft = () => {
     </ul>
   </div>
   <div>
-  <Link className='text-[38px] text-[#BAD1FF]' to={'/login'} onClick={handleSignOut}>
+  <Link className='text-[38px] text-[#BAD1FF]' to={'/Registration'} onClick={handleSignOut}>
       <TbLogout/>
         </Link>
     

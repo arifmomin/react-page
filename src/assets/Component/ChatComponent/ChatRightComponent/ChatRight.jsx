@@ -155,22 +155,32 @@ console.log(Messagedata);
                    Message.whoSendMessageUid === auth.currentUser.uid ? (
                   <div className='w-full flex justify-starts'>
                   <div className='w-[55%] flex flex-col items-start'>{Message.Message != ''? (
+                    <div className='flex flex-col items-start'>
                     <span className='w-fit text-base font-Poppins font-medium text-black px-6 py-3 rounded-lg bg-[#F1F1F1] relative left-message'>{Message.Message}</span>
+                    <span className='text-[12px] text-black text-opacity-[25%] font-medium font-Poppins mt-1'>{Message? moment(Message.CreatedAt).toNow() : 'Time Missing'}</span>
+                    </div>
                     ) : (
-                      <picture><img className='w-full h-fit' src={Message.image} alt={Message.image} /></picture>
+                      <div className=' left-image w-full h-full max-h-[400px] p-3 pb-6 relative bg-[#eaeaea] rounded-md ' >
+                        <picture><img className='w-full h-full object-cover rounded' src={Message.image} alt={Message.image} /></picture>
+                     <span className='text-[12px] text-black font-normal text-opacity-60 font-Poppins mt-1 absolute bottom-[3px] right-[12px]'>{Message? moment(Message.CreatedAt).toNow() : 'Time Missing'}</span>
+                      </div>
                     )}
-                     <span className='text-[12px] text-black text-opacity-[25%] font-medium font-Poppins mt-1'>{Message? moment(Message.CreatedAt).toNow() : 'Time Missing'}</span>
                   </div>
               </div>
                     ) : (
                       <div className='w-full flex justify-end'>
                       <div className='w-[55%] flex flex-col items-end'>
                       {Message.Message != ''? (
+                        <div className='flex flex-col items-end'>
                         <span className='w-fit text-base font-Poppins font-medium text-white px-6 py-3 rounded-lg bg-[#5F35F5] relative right-message text-wrap'>{Message.Message}</span>
+                        <span className='text-[12px] text-black text-opacity-[25%] font-medium font-Poppins mt-1'>{Message? moment(Message.CreatedAt).toNow() : 'Time Missing'}</span>
+                        </div>
                       ) : (
-                        <picture><img className='w-full h-fit' src={Message.image} alt={Message.image} /></picture>
+                        <div className='right-image w-full h-full max-h-[400px] p-3 pb-6 relative bg-commonBackground rounded-md'>
+                        <picture><img className='w-full h-full object-cover rounded' src={Message.image} alt={Message.image} /></picture>
+                     <span className='text-[12px] text-white font-medium font-Poppins mt-1 absolute bottom-[3px] right-[12px]'>{Message? moment(Message.CreatedAt).toNow() : 'Time Missing'}</span>
+                      </div>
                       )}
-                      <span className='text-[12px] text-black text-opacity-[25%] font-medium font-Poppins mt-1'>{Message? moment(Message.CreatedAt).toNow() : 'Time Missing'}</span>
                       </div>
                   </div>
                     ) 
@@ -225,7 +235,7 @@ console.log(Messagedata);
         <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
         {
   progress >= 1 ? (
-    <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+    <div className="w-full rounded-full bg-[#e5e7eb] rounded-md">
       <div 
         className="w-full h-[38px] flex justify-center items-center bg-[#5F35F5] hover:bg-opacity-80 cursor-pointer rounded-md text-white text-xl font-medium font-openSans ease-linear duration-200" 
         style={{ width: `${Math.ceil(progress)}%` }}

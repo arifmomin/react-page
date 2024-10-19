@@ -28,6 +28,8 @@ const ChatLeft = () => {
             setallGroupList(GroupBlankArr);
     });
         }, []);
+        console.log(allGroupList);
+        
     /**
      * todo: firebase Friend datafatch
      */
@@ -94,7 +96,7 @@ return (
         </div>
         <div className=' w-full h-full hide-scrollbar'>
         {allGroupList.map((item) =>(
-                            <div key={item.key}>
+                            <div key={item.Groupkey}>
                             <div className='HomePageAfter'>
                                 <div className='flex gap-x-3 items-center'>
                                 <div>

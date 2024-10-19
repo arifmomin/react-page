@@ -52,6 +52,8 @@ const LoginLeft = () => {
             })
             .catch((error) => {
                 const errorCode = error.code;
+                console.log('asdfsadf');
+                
                 Errortoast(errorCode)                
             }).finally(() =>{
                 setloading(false)
@@ -73,7 +75,7 @@ const LoginLeft = () => {
             const credential = GoogleAuthProvider.credentialFromResult(result);
             const token = credential.accessToken;
             const user = result.user;
-            return user
+            return user;
         }).then((user)=>{
             const {photoUrl, displayName, email, localId} = user.reloadUserInfo;
             const UserRef = ref (db, "users/");
@@ -89,7 +91,8 @@ const LoginLeft = () => {
         })
           .catch((error) => {
             const errorCode = error.code;
-            Errortoast (errorCode)
+            Errortoast (errorCode);
+            console.log(error.code);
           });
     };
   return (
