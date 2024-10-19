@@ -6,7 +6,6 @@ import esmern from "../../../Component/HomePage/HomeRightComponent/GroupList/Gro
 import { getAuth } from 'firebase/auth'
 import moment from 'moment'
 import Modal from 'react-modal';
-import { VscSend } from 'react-icons/vsc'
 import { useDispatch, useSelector } from 'react-redux'
 import { BsCamera, BsEmojiSmile, BsThreeDotsVertical } from 'react-icons/bs'
 import { getStorage, ref as uploadref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -28,7 +27,9 @@ const ChatRight = () => {
     const [Emoji, setEmoji] = useState (false);
     const [message, setmessage] = useState ("");
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [image, setimage] = useState('');
+    const [image, setimage] = useState(null);
+    const [progress, setprogress] = useState (null);
+    const [Messagedata, setMessagedata] = useState([]);
     function openModal() {
         setIsOpen(true);
       }
@@ -38,29 +39,35 @@ const ChatRight = () => {
     
     const {friendinfo} = useSelector ((state) =>(state.friend));
     const handleSendMessage = () =>{
-        if(friendinfo){
-            set(push(ref(db, 'sendMessage/')), {
-                whoSendMessageUid: auth.currentUser.uid,
-                whoSendMessageName: auth.currentUser.displayName,
-                whoSendMessageEmail: auth.currentUser.email,
-                whoSendMessageProfilePic : auth.currentUser.photoURL,
-                Message: message,
-                image:image? image : null,
-                whoReceiveMessageUid: friendinfo.id,
-                whoReceiveMessageName: friendinfo.name,
-                whoReceiveMessageEmail: friendinfo.email,
-                whoReceiveMessageProfilePicture: friendinfo.profilePhoto,
-                CreatedAt: moment().format("MM, DD, YYYY, h:mm:ss a"),
-              }).then(() =>{
-                console.log('all done');
-              }).catch((err) =>{
-                console.error.log('error', err);
-              }).finally(() =>{
-                setmessage('')
-              });
-        }
+      if (friendinfo &&  (message != '' || image != null)) {
+        set(push(ref(db, 'sendMessage/')), {
+            whoSendMessageUid: auth.currentUser.uid,
+            whoSendMessageName: auth.currentUser.displayName,
+            whoSendMessageEmail: auth.currentUser.email,
+            whoSendMessageProfilePic: auth.currentUser.photoURL,
+            Message: message,
+            image: image ? image : null,
+            whoReceiveMessageUid: friendinfo.id,
+            whoReceiveMessageName: friendinfo.name,
+            whoReceiveMessageEmail: friendinfo.email,
+            whoReceiveMessageProfilePicture: friendinfo.profilePhoto,
+            CreatedAt: moment().format("MM, DD, YYYY, h:mm:ss a"),
+        }).then(() => {
+            console.log('all done');
+        }).catch((err) => {
+            console.error('error', err);
+        }).finally(() => {
+            setmessage('');
+            setimage(null);
+            console.log(image);
+            
+        });
+    }
+  
     };
-    console.log(friendinfo);    
+    console.log(image);
+    
+    console.log(message);    
  // handle emoji icon
  const handleEmoji = () =>{
     setEmoji (!Emoji);
@@ -94,21 +101,36 @@ const handleSendImage = (() =>{
       uploadTask.on('state_changed', 
         (snapshot) => {
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload is ' + progress + '% done');
-          closeModal();
+          setprogress(progress);
         }, 
         (error) => {
           console.error('image upload error', error);
         }, 
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            closeModal();
             setimage( downloadURL);
+            setprogress('');
           });
         }
       );
     };
   });
-
+// ====================== Message data fetch
+useEffect(() =>{
+  const fatchdata = () =>{
+    const messageref = ref(db, 'sendMessage/')
+    onValue(messageref, (snapshot) => {
+       let messageArr = [];
+       snapshot.forEach((item) =>{
+        messageArr.push({...item.val(), Messagekey: item.key});
+       })
+       setMessagedata(messageArr);
+    });
+  };
+  fatchdata();
+  }, []);
+console.log(Messagedata);
   return (
     <>
             <div className='w-full h-full bg-white flex flex-col justify-between drop-shadow-SearchShadow rounded-[20px] p-5 pl-6'>
@@ -130,42 +152,29 @@ const handleSendImage = (() =>{
             </div>
             <div className='w-full h-[75%] p-5 overflow-y-scroll hide-scrollbar background-img'>
                 <div className='flex flex-col gap-y-5 justify-between items-baseline'>
-                    <div className='w-full flex justify-starts'>
-                    <div className='w-[55%] flex flex-col items-start'>
-                <span className='w-fit text-base font-Poppins font-medium text-black px-6 py-3 rounded-lg bg-[#F1F1F1] relative left-message'>Hi there</span>
-                <span className='text-[12px] text-black text-opacity-[25%] font-medium font-Poppins mt-1'>Today, 2:01pm</span>
-                </div>
-                    </div>
-                <div className='w-full flex justify-start'>
-                <div className='w-[55%] flex flex-col items-start'>
-                <span className='w-fit text-base font-Poppins font-medium text-black px-6 py-3 rounded-lg bg-[#F1F1F1] relative left-message text-wrap'>How are you doing?</span>
-                <span className='text-[12px] text-black text-opacity-[25%] font-medium font-Poppins mt-1'>Today, 2:01pm</span>
-                </div>
-                </div>
-                <div className='w-full flex justify-end'>
-                <div className='w-[55%] flex flex-col items-end'>
-                <span className='w-fit text-base font-Poppins font-medium text-white px-6 py-3 rounded-lg bg-[#5F35F5] relative right-message text-wrap'>How are you doing?</span>
-                <span className='text-[12px] text-black text-opacity-[25%] font-medium font-Poppins mt-1'>Today, 2:01pm</span>
-                </div>
-                </div>
-                <div className='w-full flex justify-end'>
-                <div className='w-[55%] flex flex-col items-end'>
-                <span className='w-fit text-base font-Poppins font-medium text-white px-6 py-3 rounded-lg bg-[#5F35F5] relative right-message text-wrap'>I am good  and hoew about you?</span>
-                <span className='text-[12px] text-black text-opacity-[25%] font-medium font-Poppins mt-1'>Today, 2:01pm</span>
-                </div>
-                </div>
-                <div className='w-full flex justify-start'>
-                <div className='w-[55%] flex flex-col items-start'>
-                <span className='w-fit text-base font-Poppins font-medium text-black px-6 py-3 rounded-lg bg-[#F1F1F1] relative left-message text-wrap'>I am doing well. Can we meet up tomorrow?</span>
-                <span className='text-[12px] text-black text-opacity-[25%] font-medium font-Poppins mt-1'>Today, 2:01pm</span>
-                </div>
-                </div>
-                <div className='w-full flex justify-end'>
-                <div className='w-[55%] flex flex-col items-end'>
-                <span className='w-fit text-base font-Poppins font-medium text-white px-6 py-3 rounded-lg bg-[#5F35F5] relative right-message text-wrap'>Sure!</span>
-                <span className='text-[12px] text-black text-opacity-[25%] font-medium font-Poppins mt-1'>Today, 2:01pm</span>
-                </div>
-                </div>
+                {Messagedata?.map((Message) =>
+                   Message.whoSendMessageUid === auth.currentUser.uid ? (
+                  <div className='w-full flex justify-starts'>
+                  <div className='w-[55%] flex flex-col items-start'>{Message.Message != ''? (
+                    <span className='w-fit text-base font-Poppins font-medium text-black px-6 py-3 rounded-lg bg-[#F1F1F1] relative left-message'>{Message.Message}</span>
+                    ) : (
+                      <picture><img src={Message.image} alt="" /></picture>
+                    )}
+                     <span className='text-[12px] text-black text-opacity-[25%] font-medium font-Poppins mt-1'>Today, 2:01pm</span>
+                  </div>
+              </div>
+                    ) : (
+                      <div className='w-full flex justify-end'>
+                      <div className='w-[55%] flex flex-col items-end'>
+                      {Message.Message != ''? (
+                        <span className='w-fit text-base font-Poppins font-medium text-white px-6 py-3 rounded-lg bg-[#5F35F5] relative right-message text-wrap'>{Message.Message}</span>
+                      ) : (
+                        <picture><img src={Message.image} alt="" /></picture>
+                      )}
+                      </div>
+                  </div>
+                    ) 
+                  )}
                 </div>
             </div>
 
@@ -212,8 +221,29 @@ const handleSendImage = (() =>{
                 <input id="dropzone-file" type="file" className="hidden" onChange={handleImagePicker}/>
             </label>
         </div>
-        <div className='w-full h-full flex justify-end items-center mt-6'>
-                    <button className='w-[42px] h-[38px] flex justify-center items-center bg-[#5F35F5] hover:bg-opacity-80 cursor-pointer rounded-md  text-white text-xl ease-linear duration-200' onClick={handleSendImage}><VscSend/></button>
+        <div className='w-full h-full mt-6'>
+        <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+        {
+  progress >= 1 ? (
+    <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+      <div 
+        className="w-full h-[38px] flex justify-center items-center bg-[#5F35F5] hover:bg-opacity-80 cursor-pointer rounded-md text-white text-xl font-medium font-openSans ease-linear duration-200" 
+        style={{ width: `${Math.ceil(progress)}%` }}
+      >
+        {Math.ceil(progress)}%
+      </div>
+    </div>
+  ) : (
+    <button 
+      className='w-full h-[38px] flex justify-center items-center bg-[#5F35F5] hover:bg-opacity-80 cursor-pointer rounded-md text-white text-xl font-medium font-openSans ease-linear duration-200' 
+      onClick={handleSendImage}
+    >
+      Send
+    </button>
+  )
+}
+
+              </div> 
          </div>
         </form>
       </Modal>
