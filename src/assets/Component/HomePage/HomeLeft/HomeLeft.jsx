@@ -21,7 +21,6 @@ const HomeLeft = () => {
   const [user, setuser] = useState ({});
   const location = useLocation ();
 
-  
   useEffect (()=>{
     const getUserData = ()=>{
       const starCountRef = ref(db, 'users/');
@@ -35,6 +34,8 @@ const HomeLeft = () => {
     }
     getUserData ();
   },[]); 
+  console.log(user);
+  
   // ================ sign out button implement
   const handleSignOut = () =>{
     signOut(auth).then(() => {

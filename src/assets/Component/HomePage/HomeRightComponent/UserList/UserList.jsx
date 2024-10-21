@@ -32,6 +32,7 @@ const UserList = () => {
     });
   }, []);
 
+
   /**
    * todo : Fetch friend requests from Firebase
    */
@@ -70,8 +71,7 @@ console.log(FriendList);
    * todo : Send a friend request
    */
   const handleFriendRequest = (item) => {
-    const newRequestRef = push(ref(db, 'FriendRequest/'));
-    set(newRequestRef, {
+     set(push(ref(db, 'FriendRequest/')),{
       sendFriendRequestuid: auth.currentUser.uid,
       sendFriendRequestUserName: auth.currentUser.displayName,
       sendFriendRequestUserEmail: auth.currentUser.email,

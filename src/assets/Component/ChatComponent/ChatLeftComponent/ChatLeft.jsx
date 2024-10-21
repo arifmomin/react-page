@@ -48,6 +48,8 @@ const ChatLeft = () => {
             setallFriend(FriendsArr);
         });
     }, []);
+    console.log(allFriend);
+    
     // ================ Redux Dispatch data
     const handleFriends = (item = {}) =>{
         if(auth.currentUser.uid === item.ReceivedFriendRequestuid){
@@ -140,7 +142,7 @@ return (
                                 <picture><img src={auth.currentUser.photoURL === item.ReceivedFriendRequestPhotoUrl ? item.sendFriendRequestPhotoUrl : auth.currentUser.photoURL === item.sendFriendRequestPhotoUrl ? item.ReceivedFriendRequestPhotoUrl : esmern} alt="esmern" className='allImage w-[60px] h-[60px]' /></picture>
                             </div>
                             <div>
-                                    <h3 className='allHeading text-[18px]'>{auth.currentUser.displayName === item.ReceivedFriendRequestUserName? item.sendFriendRequestUserName :auth.currentUser.displayName === item.sendFriendRequestUserName ? item.ReceivedFriendRequestUserName : "no name"}</h3>
+                                    <h3 className='allHeading text-[18px]'>{auth.currentUser.displayName === item.ReceivedFriendRequestUserName? item.sendFriendRequestUserName :auth?.currentUser?.displayName === item.sendFriendRequestUserName ? item.ReceivedFriendRequestUserName : "no name"}</h3>
                                     <p className='allSubHeading text-[14px]'>{item? moment(item.CreatedAt).toNow() : 'Time Missing'}</p>
                                 </div>
                                 </div>

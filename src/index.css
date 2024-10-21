@@ -7,7 +7,7 @@
 
 @layer components{
     .allImage{
-        @apply w-[50px] h-[50px] rounded-full drop-shadow-md cursor-pointer;
+        @apply w-[50px] h-[50px] rounded-full drop-shadow-md cursor-pointer object-cover;
     }
     .allHeading{
         @apply text-[16px] text-black font-Poppins font-semibold cursor-pointer capitalize;
@@ -22,7 +22,9 @@
         @apply relative pr-[10px] flex justify-between items-center gap-x-3 py-3 after:absolute after:bottom-0 after:left-[3%] after:w-[90%] after:h-[1px] after:bg-black after:opacity-[25%]
     }
 }
-
+.no-select {
+    user-select: none;
+  }
 .img-preview{
     width: 300px !important;
 }

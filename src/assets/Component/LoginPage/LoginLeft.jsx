@@ -78,12 +78,11 @@ const LoginLeft = () => {
             return user;
         }).then((user)=>{
             const {photoUrl, displayName, email, localId} = user.reloadUserInfo;
-            const UserRef = ref (db, "users/");
-            set (push (UserRef) , {
+            set (push (ref (db, "users/")) , {
               userUid : localId,
               userEmail :email,
               userName : displayName,
-              UserPhotoUrl : photoUrl ?  photoUrl : "",
+              UserPhotoUrl : photoUrl ? photoUrl : null,
               CreatedAtt : moment().format(" MM, DD, YYYY, h:mm:ss a"),
             }).then(()=>{
                 Navigate("/");
@@ -95,6 +94,7 @@ const LoginLeft = () => {
             console.log(error.code);
           });
     };
+
   return (
     <div className='h-screen w-[55%] flex justify-center items-center'>
             <form action="#" method='post' className='w-full max-w-[480px]' onSubmit={(e)=>e.preventDefault()}>

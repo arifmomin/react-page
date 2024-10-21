@@ -5,7 +5,6 @@ import UserList from '../Component/HomePage/HomeRightComponent/UserList/UserList
 import FriendRequiest from '../Component/HomePage/HomeRightComponent/FriendRequiest/FriendRequiest.jsx'
 import MyGroup from '../Component/HomePage/HomeRightComponent/MyGroup/MyGroup.jsx'
 import BlockedUser from '../Component/HomePage/HomeRightComponent/BlockedUser/BlockedUser.jsx'
-import { Triangle } from 'react-loader-spinner'
 const Home = () => {
   const [loading, setloading] = useState (true);
   useEffect(()=>{

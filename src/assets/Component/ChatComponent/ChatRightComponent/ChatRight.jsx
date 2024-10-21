@@ -9,6 +9,7 @@ import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux'
 import { BsCamera, BsEmojiSmile, BsThreeDotsVertical } from 'react-icons/bs'
 import { getStorage, ref as uploadref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
 const customStyles = {
     content: {
       top: '50%',
@@ -36,7 +37,6 @@ const ChatRight = () => {
       function closeModal() {
         setIsOpen(false);
       }
-    
     const {friendinfo} = useSelector ((state) =>(state.friend));
     const handleSendMessage = () =>{
       if (friendinfo &&  (message != '' || image != null)) {
@@ -235,7 +235,7 @@ console.log(Messagedata);
         <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
         {
   progress >= 1 ? (
-    <div className="w-full rounded-full bg-[#e5e7eb] rounded-md">
+    <div className="w-full bg-[#e5e7eb] rounded-md">
       <div 
         className="w-full h-[38px] flex justify-center items-center bg-[#5F35F5] hover:bg-opacity-80 cursor-pointer rounded-md text-white text-xl font-medium font-openSans ease-linear duration-200" 
         style={{ width: `${Math.ceil(progress)}%` }}
