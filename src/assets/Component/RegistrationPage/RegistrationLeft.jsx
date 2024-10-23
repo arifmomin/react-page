@@ -54,7 +54,6 @@ function RegistrationLeft() {
         }).then(()=>{
           updateProfile(auth.currentUser,{
             displayName:fullName
-            
           })
         }).then(()=>{
             sendEmailVerification(auth.currentUser).then(()=>{

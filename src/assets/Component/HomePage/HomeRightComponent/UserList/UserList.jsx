@@ -31,6 +31,7 @@ const UserList = () => {
       setUserList(userBlank);
     });
   }, []);
+console.log(UserList);
 
 
   /**
@@ -66,7 +67,6 @@ const UserList = () => {
     });
   }, []);
 console.log(FriendList);
-
   /**
    * todo : Send a friend request
    */
@@ -89,11 +89,14 @@ console.log(FriendList);
    * todo : Cancel a friend request 
    */
   const handleFriendRequestCancel = (item) => {
+    console.log(item);
+    
     const requestToCancel = FriendRequestList.find(
       (request) =>
         request.sendFriendRequestuid === auth.currentUser.uid &&
-        request.ReceivedFriendRequestuid === item.userUid
+      request.ReceivedFriendRequestuid === item.userUid
     );
+    console.log(requestToCancel);
 
     if (requestToCancel) {
       const requestRef = ref(db, `FriendRequest/${requestToCancel.key}`);
@@ -111,12 +114,15 @@ console.log(FriendList);
    * todo: Check if friend request has been sent
    */
   const isFriendRequestSent = (item) => {
+    console.log(item);
+    
     return FriendRequestList.some(
       (request) =>
         request.sendFriendRequestuid === auth.currentUser.uid &&
         request.ReceivedFriendRequestuid === item.userUid
     );
   };
+console.log(FriendRequestList);
 
   /**
    * todo: Check if the user is already a friend

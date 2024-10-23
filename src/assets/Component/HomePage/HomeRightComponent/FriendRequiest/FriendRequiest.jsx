@@ -25,6 +25,7 @@ useEffect (()=>{
     setFriendRequestList(FriendRequestArr);
 });
 }, []);
+console.log(FriendRequestList);
 
 /**
  * todo : handleAcceptFndReq button implement
@@ -74,8 +75,7 @@ return (
                             <div className='flex gap-x-2 items-center'>
                             <div className='w-[50px]'>
                             <picture><img src={item.sendFriendRequestPhotoUrl || user} alt={item.sendFriendRequestPhotoUrl || user} className='allImage '/></picture>
-                        </div>{console.log(item.sendFriendRequestUserName)
-                        }
+                        </div>
                             <div>
                                 <h3 className='allHeading'> {item.sendFriendRequestUserName}</h3>
                                 <p className='allSubHeading'>{item.sendFriendRequestUserEmail}</p>

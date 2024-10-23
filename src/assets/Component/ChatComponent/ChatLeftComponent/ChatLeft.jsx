@@ -13,6 +13,8 @@ const ChatLeft = () => {
     const Dispatch = useDispatch();
     const [allGroupList, setallGroupList] = useState([]);
     const [allFriend, setallFriend] = useState([]);
+    const [message, setmessage] = useState ([]);
+    const [messageLength, setmessageLength] = useState (false)
         /**
      * todo: firebase data 
      */
@@ -50,6 +52,22 @@ const ChatLeft = () => {
     }, []);
     console.log(allFriend);
     
+    useEffect(() => {
+        const messageRef = ref(db, 'sendMessage/');
+        onValue(messageRef, (snapshot) => {
+            const messageArr = [];
+            snapshot.forEach((item) =>{                
+               if(auth.currentUser.uid !== item.val().whoSendMessageUid){
+                messageArr.push({...item.val(), messagekey : item.key});
+                console.log('done');
+               }else{
+                console.log('eror');
+               }
+            });
+            setmessage (messageArr);
+          });
+    }, [auth, db]);
+    console.log(message);
     // ================ Redux Dispatch data
     const handleFriends = (item = {}) =>{
         if(auth.currentUser.uid === item.ReceivedFriendRequestuid){
@@ -60,6 +78,7 @@ const ChatLeft = () => {
                 profilePhoto: item.sendFriendRequestPhotoUrl,
                 
             }));
+            setmessageLength(true);
             console.log('from is block');
         }else if(auth.currentUser.uid === item.sendFriendRequestuid){
             Dispatch(friendsAction({
@@ -68,8 +87,8 @@ const ChatLeft = () => {
                 email: item.ReceivedFriendRequestUserEmail,
                 profilePhoto: item.ReceivedFriendRequestPhotoUrl,
             }));
+            setmessageLength(true);
         console.log('from else block');
-        
         }
     };
 
@@ -136,14 +155,29 @@ return (
         <div className=' w-full h-full hide-scrollbar'>
         {allFriend.map((item) =>(
                             <div key={item.friendkey} onClick={(()=> handleFriends(item))}>
-                            <div className='HomePageAfter'>
+                            <div className='HomePageAfter relative'>
                                 <div className='flex gap-x-3 items-center'>
                                 <div>
-                                <picture><img src={auth.currentUser.photoURL === item.ReceivedFriendRequestPhotoUrl ? item.sendFriendRequestPhotoUrl : auth.currentUser.photoURL === item.sendFriendRequestPhotoUrl ? item.ReceivedFriendRequestPhotoUrl : esmern} alt="esmern" className='allImage w-[60px] h-[60px]' /></picture>
+                                <picture><img src={auth.currentUser.uid === item.ReceivedFriendRequestuid ? item.sendFriendRequestPhotoUrl : auth.currentUser.uid === item.sendFriendRequestuid ? item.ReceivedFriendRequestPhotoUrl : esmern} alt="esmern" className='allImage w-[60px] h-[60px]' /></picture>
                             </div>
                             <div>
-                                    <h3 className='allHeading text-[18px]'>{auth.currentUser.displayName === item.ReceivedFriendRequestUserName? item.sendFriendRequestUserName :auth?.currentUser?.displayName === item.sendFriendRequestUserName ? item.ReceivedFriendRequestUserName : "no name"}</h3>
+                                    <h3 className='allHeading text-[18px]'>{auth.currentUser.uid === item.ReceivedFriendRequestuid? item.sendFriendRequestUserName :auth?.currentUser?.uid === item.sendFriendRequestuid ? item.ReceivedFriendRequestUserName : "no name"}</h3>
                                     <p className='allSubHeading text-[14px]'>{item? moment(item.CreatedAt).toNow() : 'Time Missing'}</p>
+                                    {
+                                        !messageLength ? (
+                                            <div>
+                                            <span className="absolute top-[50%] right-[20px] flex h-5 w-5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-commonBackground opacity-75"></span>
+                    <span className="relative rounded-full h-5 w-5 bg-commonBackground text-xs text-white flex justify-center items-center">
+                      {message?.length}
+                    </span>
+                  </span>
+                                            </div>
+                                        ) : (
+                                           ''
+                                        )
+                                    }
+
                                 </div>
                                 </div>
                         </div>

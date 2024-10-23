@@ -10,7 +10,7 @@ const Friends = () => {
     const auth = getAuth();
     const db = getDatabase();
     const [FriendList, setFriendList] = useState([]);
-    const [activeFriend, setactiveFriend] = useState(null); // সঠিক বন্ধুর ড্রপডাউন ট্র্যাক করতে
+    const [activeFriend, setactiveFriend] = useState(null);
 
     useEffect(() => {
         const starCountRef = ref(db, 'Friends/');
@@ -26,7 +26,8 @@ const Friends = () => {
             setFriendList(FriendsArr);
         });
     }, []);
-
+console.log(FriendList);
+// ================Blocked Function implement
     const handleBlocked = (item = {}) => {
         const BlockedUserref = ref(db, "BlockedUser/");
         set(push(BlockedUserref), item);
@@ -39,11 +40,11 @@ const Friends = () => {
                 console.error('Error removing friend:', error);
             });
     };
-
+    // ==================Friends function implement
     const HandleFriends = (friendId) => {
-        setactiveFriend(activeFriend === friendId ? null : friendId); // ড্রপডাউন টগল করার জন্য
+        setactiveFriend(activeFriend === friendId ? null : friendId);
     };
-
+// ================unfriend functino implement
     const handleUnFriend = (item = {}) => {
         const handleUnFriendref = ref(db, "Friends/" + item.friendkey);
         remove(handleUnFriendref).then(() => {
@@ -75,14 +76,14 @@ const Friends = () => {
                                 <div className='flex gap-x-2 items-center'>
                                     <div>
                                         <picture>
-                                            <img src={auth.currentUser.photoURL === item.sendFriendRequestPhotoUrl ? item.ReceivedFriendRequestPhotoUrl : auth.currentUser.photoURL === item.ReceivedFriendRequestPhotoUrl ? item.sendFriendRequestPhotoUrl : user} alt="friend" className='allImage' />
+                                            <img src={auth.currentUser.uid === item.sendFriendRequestuid ? item.ReceivedFriendRequestPhotoUrl : auth.currentUser.uid === item.ReceivedFriendRequestuid ? item.sendFriendRequestPhotoUrl : user} alt="friend" className='allImage' />
                                         </picture>
                                     </div>
                                     <div>
                                         <h3 className='allHeading'>
-                                            {auth.currentUser.displayName === item.sendFriendRequestUserName
+                                            {auth.currentUser.uid === item.sendFriendRequestuid
                                                 ? item.ReceivedFriendRequestUserName
-                                                : auth.currentUser.displayName === item.ReceivedFriendRequestUserName
+                                                : auth.currentUser.uid === item.ReceivedFriendRequestuid
                                                     ? item.sendFriendRequestUserName
                                                     : "no name"}
                                         </h3>

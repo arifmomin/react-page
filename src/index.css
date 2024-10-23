@@ -22,6 +22,9 @@
         @apply relative pr-[10px] flex justify-between items-center gap-x-3 py-3 after:absolute after:bottom-0 after:left-[3%] after:w-[90%] after:h-[1px] after:bg-black after:opacity-[25%]
     }
 }
+html{
+    scroll-behavior: smooth;
+}
 .no-select {
     user-select: none;
   }
