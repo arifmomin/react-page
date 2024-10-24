@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { IoIosSend } from 'react-icons/io'
+import { IoIosSearch, IoIosSend } from 'react-icons/io'
 import EmojiPicker from 'emoji-picker-react';
 import { getDatabase, onValue, ref, push, set } from "firebase/database";
 import esmern from "../../../Component/HomePage/HomeRightComponent/GroupList/GroupListImage/esmern.png"
@@ -7,8 +7,12 @@ import { getAuth } from 'firebase/auth'
 import moment from 'moment'
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux'
-import { BsCamera, BsEmojiSmile, BsThreeDotsVertical } from 'react-icons/bs'
+import { BsCamera, BsEmojiSmile, BsThreeDots, BsThreeDotsVertical } from 'react-icons/bs'
 import { getStorage, ref as uploadref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { MdKeyboardVoice } from 'react-icons/md';
+import { VscSend } from 'react-icons/vsc';
+import { IoCall, IoVideocam } from 'react-icons/io5';
+import { FcVideoCall } from 'react-icons/fc';
 
 const customStyles = {
     content: {
@@ -89,6 +93,7 @@ let sendInputImage = null
     const handleImagePicker = ((event) =>{
      sendInputImage = event.target.files[0];
 });
+   console.log(message);
    
 //  ====================== Handle send message
 const handleSendImage = (() =>{
@@ -136,24 +141,27 @@ useEffect(() =>{
 console.log(Messagedata);
   return (
     <>
-            <div className='w-full h-full bg-white flex flex-col justify-between drop-shadow-SearchShadow rounded-[20px] p-5 pl-6'>
-            <div className='w-full h-[15%]'>
-            <div className='flex justify-between items-center relative after:absolute after:w-[95%] after:h-[1px] after:opacity-[25%] after:bg-black after:bottom-[-15px] after:left-[22px]'>
-            <div className='flex gap-x-5 items-center'>
+            <div className='w-full h-full bg-white flex flex-col justify-between drop-shadow-SearchShadow overflow-hidden rounded-[20px]'>
+            <div className='w-full p-4 bg-white drop-shadow-custom'>
+            <div className='flex justify-between items-center '>
+            <div className='flex gap-x-[15px] items-center'>
             <div>
-                <picture><img src={friendinfo.profilePhoto|| esmern} alt={esmern} className='allImage w-[65px] h-[65px]'/></picture>
+                <picture><img src={friendinfo.profilePhoto|| esmern} alt={esmern} className='allImage w-[50px] h-[50px]'/></picture>
             </div>
             <div>
-                <h2 className='text-[22px] font-semibold font-Poppins text-black leading-[24px]'>{friendinfo.name || 'No One'}</h2>
+                <h2 className='text-[16px] font-semibold font-Poppins text-black leading-[24px]'>{friendinfo.name || 'No One'}</h2>
                 <span className='text-sm font-normal font-Poppins text-black text-opacity-[85%]'>Online</span>
             </div>
             </div>
-            <div>
-            <span className='text-2xl text-commonBackground cursor-pointer'><BsThreeDotsVertical/></span>
+            <div className='flex items-center gap-x-5'>
+            <span className='text-2xl text-commonBackground cursor-pointer'><IoIosSearch/></span>
+            <span className='text-2xl text-commonBackground cursor-pointer'><IoCall/></span>
+            <span className='text-2xl text-commonBackground cursor-pointer'><IoVideocam/></span>
+            <span className='text-2xl text-commonBackground cursor-pointer'><BsThreeDots/></span>
             </div>
             </div>
             </div>
-            <div className='w-full h-[75%] p-5 overflow-y-scroll hide-scrollbar background-img'>
+            <div className='w-full h-full p-5 overflow-y-scroll hide-scrollbar background-img'>
                 <div className='flex flex-col gap-y-5 justify-between items-baseline'>
                 {Messagedata?.map((Message) =>
                    Message.whoSendMessageUid === auth.currentUser.uid ? (
@@ -191,28 +199,28 @@ console.log(Messagedata);
                   )}
                 </div>
             </div>
-
-
-              <div className='w-full h-[10%]'>
-                <div className=' w-full h-full flex justify-between items-end'>
-                <div className='w-[92%] h-[45px] rounded-xl bg-[#F1F1F1] pl-5 pr-3 flex items-center'>
-                    <input type="text" placeholder='Type a message' name='message' className='message outline-0 w-[90%] h-full bg-transparent text-base text-black font-Poppins font-medium ' id='message' value={message} onChange={handleInputValue}/>
-                    <div className='flex gap-x-1 w-[13%] justify-end items-center'>
+                <div className=' w-full h-full flex justify-between items-end drop-shadow-custom'>
+                <div className='w-full h-[45px] bg-white pl-4 pr-4 flex items-center'>
+                <div className='flex gap-x-1 w-[13%] justify-start items-center'>
                     <div className='relative'>
                     {
-                            Emoji && <span className='absolute bottom-[40px] right-0'><EmojiPicker onEmojiClick={handleemojiclick}/></span>
+                            Emoji && <span className='absolute bottom-[45px] left-0'><EmojiPicker onEmojiClick={handleemojiclick}/></span>
                         }
                         <span className='w-[35px] h-[35px] flex justify-center items-center rounded-md hover:bg-[#e0e0e0db] text-xl text-[#707070] cursor-pointer' onClick={handleEmoji}><BsEmojiSmile/></span>
                     </div>                    
                     <div><span className='w-[35px] h-[35px] flex justify-center items-center rounded-md hover:bg-[#e0e0e0db] text-xl text-[#707070] cursor-pointer' onClick={openModal}><BsCamera/></span></div>
                     </div>
-                    
+                    <input type="text" placeholder='Type a message' name='message' className='message outline-0 w-[100%] h-full bg-transparent text-base text-black font-Poppins font-medium ' id='message' value={message} onChange={handleInputValue}/>
+                  <div>{
+                    !message ? (
+                      <span className='text-[#707070] text-2xl w-[35px] h-[35px] flex justify-center items-center rounded-md hover:bg-[#e0e0e0db]'><MdKeyboardVoice/></span>
+                    ) : (
+                      <span className=' text-[#707070] text-2xl w-[35px] h-[35px] flex justify-center items-center rounded-md hover:bg-[#e0e0e0db]' onClick={handleSendMessage}><VscSend/></span>
+                    )
+                    }
+                  </div>
                 </div>
-                <div className='w-[45px] h-[45px] bg-[#5F35F5] rounded-xl flex justify-center items-center cursor-pointer group'>
-                    <span className=' text-white text-2xl group-hover:rotate-45 ease-linear duration-200' onClick={handleSendMessage}><IoIosSend /></span>
                 </div>
-                </div>
-              </div>
         </div>
         <div>
       <Modal
