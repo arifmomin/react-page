@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { IoIosSearch, IoIosSend } from 'react-icons/io'
+import { IoIosArrowDown, IoIosSearch, IoIosSend } from 'react-icons/io'
 import EmojiPicker from 'emoji-picker-react';
 import { getDatabase, onValue, ref, push, set } from "firebase/database";
 import esmern from "../../../Component/HomePage/HomeRightComponent/GroupList/GroupListImage/esmern.png"
@@ -88,12 +88,12 @@ const handleInputValue = ((event) =>{
     const {value} = event.target;  
     setmessage(value);
 });
+console.log(message);
 // =============handleimagepicker function implement
 let sendInputImage = null
     const handleImagePicker = ((event) =>{
      sendInputImage = event.target.files[0];
 });
-   console.log(message);
    
 //  ====================== Handle send message
 const handleSendImage = (() =>{
@@ -164,17 +164,30 @@ console.log(Messagedata);
             <div className='w-full h-full p-5 overflow-y-scroll hide-scrollbar background-img'>
                 <div className='flex flex-col gap-y-5 justify-between items-baseline'>
                 {Messagedata?.map((Message) =>
-                   Message.whoSendMessageUid === auth.currentUser.uid ? (
-                                    <div className='w-full flex justify-end'>
+                   Message.whoSendMessageUid === auth.currentUser.uid
+                   ? (
+                                    <div className='w-full flex justify-end' key={Messagedata.Messagekey}>
                                     <div className='w-[55%] flex flex-col items-end'>
                                     {Message.Message != ''? (
                                       <div className='flex flex-col items-end'>
-                                      <span className='w-fit text-base font-Poppins font-medium text-white px-6 py-3 rounded-lg bg-[#5F35F5] relative right-message text-wrap'>{Message.Message}</span>
-                                      <span className='text-[12px] text-black text-opacity-[25%] font-medium font-Poppins mt-1'>{Message? moment(Message.CreatedAt).toNow() : 'Time Missing'}</span>
+                                      <div className='flex flex-col items-end'>
+                                        <div className='px-6 py-3 rounded-lg bg-[#5F35F5] relative right-message group'>
+                                          <span className='w-fit text-base font-Poppins font-medium text-white text-wrap'>{Message.Message}</span>
+                                          <div className='flex justify-between items-center gap-x-1 w-[45px] h-6 px-[5px] py-[2px] absolute top-[50%] left-[-45px] rounded-[50px] bg-slate-200 transition-all duration-700 ease-in-out translate-y-[-50%] opacity-0 group-hover:left-[-50px] group-hover:opacity-100 transition-delay-300 group-hover:transition-delay-[0ms]'>
+                                            <span className='text-sm text-[#707070]'><BsEmojiSmile /></span>
+                                            <span className='text-sm text-[#707070]'><IoIosArrowDown /></span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <span className='text-[12px] text-black text-opacity-[25%] font-medium font-Poppins'>{Message? moment(Message.CreatedAt).toNow() : 'Time Missing'}</span>
                                       </div>
                                     ) : (
-                                      <div className='right-image w-full h-full max-h-[400px] p-3 pb-6 relative bg-commonBackground rounded-md'>
+                                      <div className='right-image w-full h-full max-h-[400px] p-3 pb-6 relative bg-commonBackground rounded-md group'>
                                       <picture><img className='w-full h-full object-cover rounded' src={Message.image} alt={Message.image} /></picture>
+                                          <div className='flex justify-between items-center gap-x-1 w-[45px] h-6 px-[5px] py-[2px] absolute top-[50%] left-[-40px] rounded-[50px] bg-slate-200 transition-all duration-700 ease-in-out translate-y-[-50%] opacity-0 group-hover:left-[-50px] group-hover:opacity-100 transition-delay-300 group-hover:transition-delay-[0ms]'>
+                                            <span className='text-sm text-[#707070]'><BsEmojiSmile /></span>
+                                            <span className='text-sm text-[#707070]'><IoIosArrowDown /></span>
+                                          </div>
                                    <span className='text-[12px] text-white font-medium font-Poppins mt-1 absolute bottom-[3px] right-[12px]'>{Message? moment(Message.CreatedAt).toNow() : 'Time Missing'}</span>
                                     </div>
                                     )}
@@ -184,12 +197,22 @@ console.log(Messagedata);
                       <div className='w-full flex justify-starts'>
                       <div className='w-[55%] flex flex-col items-start'>{Message.Message != ''? (
                         <div className='flex flex-col items-start'>
-                        <span className='w-fit text-base font-Poppins font-medium text-black px-6 py-3 rounded-lg bg-[#F1F1F1] relative left-message'>{Message.Message}</span>
-                        <span className='text-[12px] text-black text-opacity-[25%] font-medium font-Poppins mt-1'>{Message? moment(Message.CreatedAt).toNow() : 'Time Missing'}</span>
+                          <div className='group px-6 py-3 rounded-lg bg-[#F1F1F1] relative '>
+                          <span className='text-base font-Poppins font-medium text-black left-message'>{Message.Message}</span>
+                          <div className='flex justify-between items-center gap-x-1 w-[45px] h-6 px-[5px] py-[2px] absolute top-[50%] right-[-45px] rounded-[50px] bg-slate-200 transition-all duration-700 ease-in-out translate-y-[-50%] opacity-0 group-hover:right-[-50px] group-hover:opacity-100 transition-delay-300 group-hover:transition-delay-[0ms]'>
+                           <span className='text-sm text-[#707070]'><IoIosArrowDown /></span>
+                           <span className='text-sm text-[#707070]'><BsEmojiSmile /></span>
+                          </div>
+                          </div>
+                        <span className='text-[12px] text-black text-opacity-[25%] font-medium font-Poppins'>{Message? moment(Message.CreatedAt).toNow() : 'Time Missing'}</span>
                         </div>
                         ) : (
-                          <div className=' left-image w-full h-full max-h-[400px] p-3 pb-6 relative bg-[#eaeaea] rounded-md ' >
+                          <div className=' left-image w-full h-full max-h-[400px] p-3 pb-6 relative bg-[#eaeaea] rounded-md group' >
                             <picture><img className='w-full h-full object-cover rounded' src={Message.image} alt={Message.image} /></picture>
+                            <div className='flex justify-between items-center gap-x-1 w-[45px] h-6 px-[5px] py-[2px] absolute top-[50%] right-[-40px] rounded-[50px] bg-slate-200 transition-all duration-700 ease-in-out translate-y-[-50%] opacity-0 group-hover:right-[-50px] group-hover:opacity-100 transition-delay-300 group-hover:transition-delay-[0ms]'>
+                                            <span className='text-sm text-[#707070]'><IoIosArrowDown /></span>
+                                            <span className='text-sm text-[#707070]'><BsEmojiSmile /></span>
+                                          </div>
                          <span className='text-[12px] text-black font-normal text-opacity-60 font-Poppins mt-1 absolute bottom-[3px] right-[12px]'>{Message? moment(Message.CreatedAt).toNow() : 'Time Missing'}</span>
                           </div>
                         )}
@@ -199,7 +222,7 @@ console.log(Messagedata);
                   )}
                 </div>
             </div>
-                <div className=' w-full h-full flex justify-between items-end drop-shadow-custom'>
+                <div className=' w-full h-[45px] flex justify-between items-end drop-shadow-custom'>
                 <div className='w-full h-[45px] bg-white pl-4 pr-4 flex items-center'>
                 <div className='flex gap-x-1 w-[13%] justify-start items-center'>
                     <div className='relative'>
@@ -210,9 +233,9 @@ console.log(Messagedata);
                     </div>                    
                     <div><span className='w-[35px] h-[35px] flex justify-center items-center rounded-md hover:bg-[#e0e0e0db] text-xl text-[#707070] cursor-pointer' onClick={openModal}><BsCamera/></span></div>
                     </div>
-                    <input type="text" placeholder='Type a message' name='message' className='message outline-0 w-[100%] h-full bg-transparent text-base text-black font-Poppins font-medium ' id='message' value={message} onChange={handleInputValue}/>
+                    <input type="text" placeholder='Type a message' name='message' autoComplete='off' className='message outline-0 w-[100%] h-full bg-transparent text-base text-black font-Poppins font-medium pr-4' id='message' value={message} onChange={handleInputValue}/>
                   <div>{
-                    !message ? (
+                    (!image && !message) ?(
                       <span className='text-[#707070] text-2xl w-[35px] h-[35px] flex justify-center items-center rounded-md hover:bg-[#e0e0e0db]'><MdKeyboardVoice/></span>
                     ) : (
                       <span className=' text-[#707070] text-2xl hover:text-commonBackground cursor-pointer hover:translate-x-2' onClick={handleSendMessage}><VscSend/></span>
