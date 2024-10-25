@@ -31,7 +31,6 @@ const UserList = () => {
       setUserList(userBlank);
     });
   }, []);
-console.log(UserList);
 
 
   /**

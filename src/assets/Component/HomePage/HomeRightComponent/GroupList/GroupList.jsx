@@ -11,7 +11,7 @@ const GroupList = () => {
     const [allGroupList, setallGroupList] = useState ([]);
     const [allGroupListRequiest, setallGroupListRequiest] = useState ([]);
     useEffect(()=>{
-        const GroupListRef = ref(db, 'Groups/');
+        const GroupListRef = ref(db, 'All Groups/');
         onValue(GroupListRef, (snapshot) => {
         const GroupBlankArr = [];
         snapshot.forEach((item) =>{
@@ -22,6 +22,8 @@ const GroupList = () => {
         setallGroupList(GroupBlankArr);
 });
     }, []);
+    console.log(allGroupList);
+    
 const handleGroupRequest = ((item = {}) =>{
     set(push(ref(db, "GroupRequest/")), {
          ...item,
@@ -40,17 +42,28 @@ useEffect(()=>{
     onValue(GroupListRef, (snapshot) => {
     const GroupRequiestBlankArr = [];
     snapshot.forEach((item) =>{
-            GroupRequiestBlankArr.push (item.val().Groupkey + item.val().WhoJoinGroupUid);
-            
+        if(auth.currentUser.uid === item.val().WhoJoinGroupUid){
+            GroupRequiestBlankArr.push({...item.val(), GroupRequestKey : item.key}, item.val().Groupkey + auth.currentUser.uid);
+        }
     });
     setallGroupListRequiest(GroupRequiestBlankArr);
 });
 }, []);
+
+console.log(allGroupListRequiest);
+
 /**
  * todo: handleGroupcancleRequest button implement
  */
     const handleGroupcancleRequest = (item)=>{
-        remove(ref(db, `GroupRequest/`))
+        
+        let Filtergroupkey = allGroupListRequiest.filter(user => user.Groupkey === item.Groupkey); 
+        let  GroupKeyFind= Filtergroupkey.find(user => user.Groupkey);
+        if(item.Groupkey === GroupKeyFind.Groupkey){
+            remove(ref(db, `GroupRequest/${GroupKeyFind.GroupRequestKey}`));
+        }else{
+            console.log('cancle');
+        }   
         };
   return (
     <div className='w-[32.5%] h-[50vh]'>
@@ -91,10 +104,10 @@ useEffect(()=>{
                                 <div>
                                     {
                                         allGroupListRequiest?.includes(item.Groupkey + auth.currentUser.uid) ? (
-                                        <button className='GroupListButton' onClick={(() =>{handleGroupcancleRequest (item)})}>Cancle</button>) : (
+                                        <button className='GroupListButton' onClick={() => handleGroupcancleRequest(item)}>Cancle</button>) : (
                                         <button className='GroupListButton'onClick={() => handleGroupRequest (item)}>join</button>)
                                     }
-                                    
+
                                 </div>
                         </div>
                             </div>

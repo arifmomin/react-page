@@ -53,7 +53,6 @@ const HandleRejectFndReq = (item)=>{
     const removeFndReq = (ref(db, "FriendRequest/" + item.FriendRequestKey))
     remove(removeFndReq);
 };
-
 return (
     <div className='w-[32.5%] h-[43vh] bg-white rounded-[20px] drop-shadow-SearchShadow px-5 py-3 flex flex-col gap-y-[10px]'>
     <div className='flex justify-between items-center'>

@@ -108,7 +108,7 @@ const customStyles = {
     }).then(()=>{
       return getDownloadURL(storageRef);
     }).then((GroupPhotoDownload) =>{
-      set(push(dbref(db, 'Groups/')), {
+      set(push(dbref(db, 'All Groups/')), {
         WhoCreateGroupUid: auth.currentUser.uid,
         WhoCreateGroupName: auth.currentUser.displayName,
         WhoCreateGroupPhotoUrl: auth.currentUser.photoURL,
@@ -147,7 +147,7 @@ const customStyles = {
     const [allGroupRequestList, setallGroupRequestList] = useState ([]);
     useEffect(()=>{
       const fatchGroup = (() =>{
-        const GroupListRef = dbref(db, 'Groups/');
+        const GroupListRef = dbref(db, 'All Groups/');
         onValue(GroupListRef, (snapshot) => {
         const GroupBlankArr = [];
         snapshot.forEach((item) =>{
@@ -173,16 +173,19 @@ const customStyles = {
     }, []);
     
     const handleGroupRequestAccept = (group) =>{
-      set(dbref(db, "GroupMember"),{
+      set(push(dbref(db, "GroupMember"),{
         ...group,
         CreatedAt: moment().format("MM, DD, YYYY, h:mm:ss a"),
       }).then(() =>{
         remove (dbref(db, `GroupRequest/${group.GroupRequestkey}`));
+      }).catch((err) =>{
+        console.log('error something');
       })
-      console.log(group);
-    };
+    )};
     const handleGroupRequestCancle = ((group = {}) =>{
       remove (dbref(db, `GroupRequest/${group.GroupRequestkey}`));
+      console.log(group);
+      
     });
     /**
      * todo: Group member data fetch

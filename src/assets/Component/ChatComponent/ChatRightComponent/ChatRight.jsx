@@ -76,7 +76,7 @@ const ChatRight = () => {
  // handle emoji icon
  const handleEmoji = () =>{
     setEmoji (!Emoji);
-}    
+}
 // ===========handleemojiclick function implement
 const handleemojiclick = ((event) =>{
     setmessage((prev) =>{
@@ -215,7 +215,7 @@ console.log(Messagedata);
                     !message ? (
                       <span className='text-[#707070] text-2xl w-[35px] h-[35px] flex justify-center items-center rounded-md hover:bg-[#e0e0e0db]'><MdKeyboardVoice/></span>
                     ) : (
-                      <span className=' text-[#707070] text-2xl w-[35px] h-[35px] flex justify-center items-center rounded-md hover:bg-[#e0e0e0db]' onClick={handleSendMessage}><VscSend/></span>
+                      <span className=' text-[#707070] text-2xl hover:text-commonBackground cursor-pointer hover:translate-x-2' onClick={handleSendMessage}><VscSend/></span>
                     )
                     }
                   </div>
